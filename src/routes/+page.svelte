@@ -1,6 +1,6 @@
 <script lang="ts">
   import SupabaseService from "../api/supabase-service";
-  import Header from "./Header.svelte";
+  import Header from "../lib/features/Header.svelte";
 
   async function fetchAllUsers() {
     try {
@@ -12,9 +12,10 @@
     }
   }
 
-  fetchAllUsers();
+  // fetchAllUsers();
 </script>
 
 <div>
-    <Header headerText="Dashboard" />
+  <Header headerText="Dashboard" />
+  <a href="/login"> Login</a>
 </div>
