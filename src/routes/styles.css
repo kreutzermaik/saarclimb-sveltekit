@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+
+html {
+  background-color: #F5F5F5;
+  font-family: "Manrope";
+}
+
+:root {
+  /* Colors */
+  --primary: #2c3e50;
+  --secondary: #45607d;
+  --lightGrey: #596169;
+  --darkGrey: #393e43;
+  --backgroundGrey: #e0e0e0;
+  --highlight: #82543b;
+  --success: #25a05c;
+
+  /* Button Colors */
+  --button-white: #fff;
+  --button-yellow: #ecc858;
+  --button-green: #90ba90;
+  --button-red: #f85c5c;
+  --button-orange: darkorange;
+  --button-blue: #1b7abd;
+  --button-black: #000;
+  --button-turquiose: lightseagreen;
+}
+
+.userImage {
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.fc-toolbar-title {
+  font-size: 20px !important;
+  font-weight: 600;
+}
+
+nav {
+  z-index: 1;
+}
+
+.board-table {
+  margin-bottom: 5%;
+}
+
+
+@media screen and (max-width: 640px) {
+  .board-table {
+    margin-bottom: 25%;
+  }
+}
+
+@media screen and (min-width: 640px) {
+  .login-container {
+    width: 66.6666%;
+  }
+}
+
+/* Show up and down arrows for input fields on mobile devices*/
+@media (max-width: 767px) {
+  input[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+}
