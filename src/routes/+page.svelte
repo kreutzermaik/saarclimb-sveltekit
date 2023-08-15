@@ -1,6 +1,10 @@
 <script lang="ts">
-  import SupabaseService from "../api/supabase-service";
+  import PlanerCompact from "$lib/features/PlanerCompact.svelte";
+import SupabaseService from "../api/supabase-service";
   import Header from "../lib/features/Header.svelte";
+  import Session from "../session";
+
+  let isLoggedIn: boolean = false;
 
   async function fetchAllUsers() {
     try {
@@ -12,10 +16,23 @@
     }
   }
 
-  // fetchAllUsers();
+  /**
+   * initialize isLoggedIn variable
+   */
+  async function initLoggedIn() {
+    try {
+      isLoggedIn = await Session.isLoggedIn();
+    } catch (err: any) {
+      console.log(err);
+    }
+  }
+
+  initLoggedIn();
 </script>
 
 <div>
   <Header headerText="Dashboard" />
-  <a href="/login"> Login</a>
+  {#if isLoggedIn}
+    <PlanerCompact />
+  {/if}
 </div>
