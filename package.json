@@ -10,9 +10,14 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.4",
+    "@fullcalendar/daygrid": "^6.1.4",
+    "@fullcalendar/interaction": "^6.1.6",
     "@supabase/supabase-js": "^2.8.0",
     "daisyui": "^2.51.3",
     "flowbite": "^1.6.3",
+    "fullcalendar": "^6.1.4",
+    "svelte-fullcalendar": "^2.0.0-beta.0",
     "sweetalert2": "^11.7.20"
   },
   "devDependencies": {

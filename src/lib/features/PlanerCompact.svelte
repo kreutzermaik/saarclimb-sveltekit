@@ -4,7 +4,6 @@
   import { onMount } from "svelte";
   import SupabaseService from "../../api/supabase-service";
   import type { Plan } from "../../types/Plan";
-  import Session from "../../session";
   import FailedIcon from "$lib/ui/icons/FailedIcon.svelte";
   import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
   import CheckDisabledIcon from "$lib/ui/icons/CheckDisabledIcon.svelte";
