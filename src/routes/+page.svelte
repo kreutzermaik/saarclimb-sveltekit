@@ -36,7 +36,12 @@
   <Header headerText="Dashboard" />
   {#if isLoggedIn}
     <PlanerCompact />
-    <Calendar />
+    <br>
+    <div class="card card-compact shadow-xl bg-white">
+      <div class="card-body">
+        <Calendar />
+      </div>
+    </div>
   {:else}
     <NotLoggedIn />
   {/if}

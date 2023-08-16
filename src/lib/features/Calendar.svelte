@@ -5,15 +5,12 @@
   import { onDestroy, onMount } from "svelte";
   import SupabaseService from "../../api/supabase-service";
   import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
+  import AddEventDialog from "./AddEventDialog.svelte";
 
   let subscription: any;
-
   let calendarEl: any;
   let events: any = [];
-  let selectedDate;
-  //   const [calendarEl, setCalendarEl] = createSignal(null);
-  //   const [events, setEvents] = createSignal<Event[]>();
-  //   const [selectedDate, setSelectedDate] = createSignal();
+  let selectedDate: any;
 
   /**
    * create fullcalendar with config
@@ -77,7 +74,7 @@
    * @param payload
    */
   function onInsert(payload: any) {
-    events = (prev: any) => [...prev, payload.new];
+    events.push(payload.new);
     if (events) createCalendar();
   }
 
@@ -127,14 +124,14 @@
 
 <main class="text-gray-700">
   {#if events}
-    <!-- <div
+    <div
       class="max-sm:h-screen"
       style="max-height: 50vh"
-      ref={(el) => calendarEl = el}
-    /> -->
+      bind:this={calendarEl}
+    />
   {:else}
     <LoadingSpinner />
   {/if}
 
-  <!-- <AddEventDialog date={selectedDate} /> -->
+  <AddEventDialog propsDate={selectedDate} />
 </main>
