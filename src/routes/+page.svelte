@@ -1,7 +1,8 @@
 <script lang="ts">
   import Calendar from "$lib/features/Calendar.svelte";
-import PlanerCompact from "$lib/features/PlanerCompact.svelte";
-import SupabaseService from "../api/supabase-service";
+  import PlanerCompact from "$lib/features/PlanerCompact.svelte";
+  import NotLoggedIn from "$lib/ui/NotLoggedIn.svelte";
+  import SupabaseService from "../api/supabase-service";
   import Header from "../lib/features/Header.svelte";
   import Session from "../session";
 
@@ -36,5 +37,7 @@ import SupabaseService from "../api/supabase-service";
   {#if isLoggedIn}
     <PlanerCompact />
     <Calendar />
+  {:else}
+    <NotLoggedIn />
   {/if}
 </div>

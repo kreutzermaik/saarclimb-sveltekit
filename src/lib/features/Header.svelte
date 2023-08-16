@@ -1,11 +1,38 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+  import { onMount } from "svelte";
+  import Cache from "../../cache";
+  import Session from "../../session";
+  import SupabaseService from "../../api/supabase-service";
+
   export let headerText: string;
+  let avatar: any;
+  let isLoggedIn: boolean = false;
+
+  onMount(async () => {
+    const cacheAvatar = Cache.getCacheItem("userImage");
+    if (cacheAvatar) avatar = JSON.parse(cacheAvatar);
+    else avatar = (await SupabaseService.getCurrentAvatarUrl()).avatar_url?.avatar_url
+    if (await Session.isLoggedIn()) {
+      isLoggedIn = true;
+    }
+  });
+
 </script>
 
 <main class="bg-white mb-6">
   <div class="p-4 rounded-lg flex justify-between">
-    <h1 class="text-primary text-xl uppercase mx-auto">{headerText}</h1>
+    {#if isLoggedIn}
+    <button on:click={() => goto("/profile")}>
+      <div
+      class="userImage w-6 h-6"
+      style={`background-image: url(${avatar})`}
+      />
+    </button>
+    {/if}
 
+    <h1 class="text-primary text-xl uppercase mx-auto">{headerText}</h1>
+    
     <a href="/settings">
       <svg
         class="w-6 h-6 cursor-pointer text-primary"
