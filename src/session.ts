@@ -1,4 +1,4 @@
-import type {AuthSession, AuthUser, Session as SupabaseSession} from "@supabase/supabase-js";
+import type {AuthUser, Session as SupabaseSession} from "@supabase/supabase-js";
 import { supabase } from "./supabase";
 import type { User } from "./types/User";
 

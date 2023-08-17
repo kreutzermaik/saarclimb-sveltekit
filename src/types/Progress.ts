@@ -1,4 +1,4 @@
-import { ProgressItem } from "./ProgressItem"
+import type { ProgressItem } from "./ProgressItem"
 
 export type Progress = {
     userid: string,
