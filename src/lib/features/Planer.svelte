@@ -1,8 +1,8 @@
 <script lang="ts">
   import SupabaseService from "../../api/supabase-service";
-  import type { Plan } from "../../types/Plan";
+  import type {Plan} from "../../types/Plan";
   import Notification from "$lib/ui/Notification";
-  import { onDestroy, onMount } from "svelte";
+  import {onDestroy, onMount} from "svelte";
   import Cache from "../../cache";
   import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
   import ResetIcon from "$lib/ui/icons/ResetIcon.svelte";
@@ -19,8 +19,7 @@
    */
   async function fetchPlan() {
     try {
-      let result = (await SupabaseService.getPlan()).planer.plan;
-      return result;
+      return (await SupabaseService.getPlan()).planer.plan;
     } catch (err: any) {
       console.log(err);
     }

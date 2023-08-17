@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import SupabaseService from "../../api/supabase-service";
   import Session from "../../session";
-  import Notification from "$lib/ui/Notification";
+  import Notification from "../ui/Notification";
   import type { Gym } from "../../types/Gym";
   import type { Event } from "../../types/Event";
   import Button from "$lib/ui/Button.svelte";

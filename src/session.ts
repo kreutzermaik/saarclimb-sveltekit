@@ -1,19 +1,20 @@
-import type { AuthSession, AuthUser } from "@supabase/supabase-js";
+import type {AuthSession, AuthUser, Session as SupabaseSession} from "@supabase/supabase-js";
 import { supabase } from "./supabase";
 import type { User } from "./types/User";
 
 export default class Session {
-  private static session: AuthSession;
+  private static session: SupabaseSession | null;
   private static currentUser: User;
 
   /**
    * get supabase session
    * @returns
    */
-  static async getSession(): Promise<AuthSession> {
+  static async getSession(): Promise<SupabaseSession> {
     await supabase.auth.getSession().then(({ data: { session } }) => {
       this.session = session;
     });
+    // @ts-ignore
     return this.session;
   }
 
@@ -29,9 +30,11 @@ export default class Session {
    * get currentUser from cache if available or session
    * @returns
    */
-  static async getCurrentUser(): Promise<User> {
+  static async getCurrentUser(): Promise<any> {
     if (await this.getSession()) {
-      this.setCurrentUser((await this.getSession()).user);
+      let sess: SupabaseSession = await this.getSession();
+      console.log(sess);
+      await this.setCurrentUser((await this.getSession()).user);
       return this.currentUser;
     }
   }
