@@ -14,7 +14,8 @@
     "daisyui": "^2.51.3",
     "flowbite": "^1.6.3",
     "sweetalert2": "^11.7.20",
-    "vite-plugin-pwa": "^0.16.4"
+    "vite-plugin-pwa": "^0.16.4",
+    "webworker": "^0.8.4"
   },
   "devDependencies": {
     "@fullcalendar/core": "^6.0.0",
