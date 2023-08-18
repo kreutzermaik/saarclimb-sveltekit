@@ -27,7 +27,7 @@ if (!self.define) {
       s[t] = Promise.all(n.map((e) => l[e] || c(e))).then((e) => (r(...e), o));
     };
   }
-  define(["./workbox-7369c0e1"], function (e) {
+  define(["./workbox-7369c0e1.js"], function (e) {
     "use strict";
     self.addEventListener("message", (e) => {
       e.data && "SKIP_WAITING" === e.data.type && self.skipWaiting();
