@@ -22,6 +22,7 @@
     "@fullcalendar/interaction": "^6.0.0",
     "@sveltejs/adapter-netlify": "^1.0.0-next.88",
     "@sveltejs/kit": "^1.20.4",
+    "@vite-pwa/sveltekit": "^0.2.5",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
     "postcss-load-config": "^4.0.1",
