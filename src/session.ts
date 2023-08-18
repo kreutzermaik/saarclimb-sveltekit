@@ -19,7 +19,7 @@ export default class Session {
   }
 
   /**
-   * check if user is logged in
+   * check if user is logged in 
    * @returns
    */
   static async isLoggedIn(): Promise<boolean> {
