@@ -12,7 +12,10 @@
   onMount(async () => {
     const cacheAvatar = Cache.getCacheItem("userImage");
     if (cacheAvatar) avatar = JSON.parse(cacheAvatar);
-    else avatar = (await SupabaseService.getCurrentAvatarUrl()).avatar_url?.avatar_url
+    else {
+      avatar = (await SupabaseService.getCurrentAvatarUrl()).avatar_url?.avatar_url;
+      Cache.setCacheItem("userImage", JSON.stringify(avatar));
+    }
     if (await Session.isLoggedIn()) {
       isLoggedIn = true;
     }
@@ -32,7 +35,7 @@
     {/if}
 
     <h1 class="text-primary text-xl uppercase mx-auto">{headerText}</h1>
-    
+
     <a href="/settings">
       <svg
         class="w-6 h-6 cursor-pointer text-primary"
