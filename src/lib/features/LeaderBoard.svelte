@@ -46,7 +46,7 @@
      * fetch all gyms
      * @returns
      */
-    async function fetchGyms(): Promise<Gym[]> {
+    async function fetchGyms(): Promise<Gym[] | undefined> {
         try {
             let result = (await SupabaseService.getGyms()).gym;
             const gymsResult = result?.map((item: { [x: string]: any }) => {
@@ -173,7 +173,7 @@
             } else {
                 currentGymId = (await fetchUsersCurrentGym()).gym;
                 if (currentGymId) {
-                    currentGymName = (await SupabaseService.getGymNameById(currentGymId)).gym.name;
+                    currentGymName = (await SupabaseService.getGymNameById(currentGymId))?.gym.name;
                 }
             }
 
@@ -207,7 +207,7 @@
         {:else if currentGym}
             {currentGym.name}
         {:else}
-            Bitte auswählen...
+            Halle auswählen...
         {/if}
     </option>
     {#each gyms as gym}
