@@ -5,7 +5,7 @@ import Session from "../session";
 export default class SupabaseService {
   public static async addUser(user: any) {
     const { data, error } = await supabase.from("users")
-      .insert(user)
+      .upsert(user)
     return { data, error };
   }
 
