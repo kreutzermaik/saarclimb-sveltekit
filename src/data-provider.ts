@@ -12,7 +12,7 @@ export default class DataProvider {
     }
     if (await Session.getCurrentUser()) {
       if ((await Session.getCurrentUser()).name === undefined) {
-        Session.updateUserInSession(JSON.parse(Cache.getCacheItem("username")));
+        await Session.updateUserInSession(JSON.parse(Cache.getCacheItem("username")));
       }
     }
     await this.addAvatar();
@@ -82,7 +82,7 @@ export default class DataProvider {
         let data = await SupabaseService.getAvatar();
         if (data.data) {
           let url = data.data.signedUrl;
-          this.updateUserWithAvatarUrl(url);
+          await this.updateUserWithAvatarUrl(url);
           Cache.setCacheItem("userImage", url);
         }
       }
@@ -95,7 +95,7 @@ export default class DataProvider {
   static async updateAvatarUrlInCache() {
     let url = (await SupabaseService.getAvatar()).data?.signedUrl;
     Cache.setCacheItem("userImage", url);
-    if (url) this.updateUserWithAvatarUrl(url);
+    if (url) await this.updateUserWithAvatarUrl(url);
   }
 
   /**

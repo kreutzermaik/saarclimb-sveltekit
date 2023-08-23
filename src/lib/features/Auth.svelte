@@ -55,12 +55,12 @@
       return;
     }
 
-    SupabaseService.addUser({ uid: data.user?.id, email: data.user?.email, name: name, avatar_url: '' });
+    await SupabaseService.addUser({ uid: data.user?.id, email: data.user?.email, name: name, avatar_url: '' });
     await DataProvider.initUserData()
     
     Notification.show(Notification.REGISTERED_MESSAGE);
 
-    goto('/');
+    await goto('/');
   }
 
   /**
@@ -77,7 +77,7 @@
       return;
     }
 
-    goto('/');
+    await goto('/');
   }
 </script>
 
