@@ -59,7 +59,7 @@ export default class SupabaseService {
       .eq("uid", await Session.getCurrentUserId());
   }
 
-  public static async updateUserGym(gymId: number) {
+  public static async  updateUserGym(gymId: number) {
     const { data, error } = await supabase
       .from("users")
       .update({ gym: gymId })

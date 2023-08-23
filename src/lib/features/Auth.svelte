@@ -31,7 +31,7 @@
    */
    async function loginWithGoogle() {
     
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google'
     })
 
@@ -67,7 +67,7 @@
    * login with email and password
   */
   async function loginWithEmail() {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
@@ -112,7 +112,7 @@
   <form class="space-y-4 md:space-y-6" action="#">
     <div>
       <label for="name" class="block mb-2 text-sm text-left font-medium text-gray-900 dark:text-white">Vollständiger Name</label>
-      <input type="name" name="name" on:change={e => { setName(e) }} id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Max Mustermann" required="" />
+      <input type="text" name="name" on:change={e => { setName(e) }} id="name" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Max Mustermann" required="" />
     </div>
     <div>
       <label for="email" class="block mb-2 text-sm text-left font-medium text-gray-900 dark:text-white">E-Mail Adresse</label>

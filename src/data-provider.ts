@@ -1,6 +1,7 @@
 import SupabaseService from "./api/supabase-service";
 import Cache from "./cache";
 import Session from "./session";
+import type {Gym} from "./types/Gym";
 
 export default class DataProvider {
   /**
@@ -18,6 +19,7 @@ export default class DataProvider {
     await this.addAvatar();
     await this.addAvatarUrlToCache();
     await this.addPlan();
+    await this.initUserPoints();
   }
 
   /**
@@ -44,7 +46,7 @@ export default class DataProvider {
       (await Session.getCurrentUser()) === null ||
       (await Session.getCurrentUser()) === undefined
     ) {
-      SupabaseService.addUser({
+      await SupabaseService.addUser({
         uid: user?.id,
         email: user?.email,
         name: user?.user_metadata["full_name"],
@@ -61,7 +63,7 @@ export default class DataProvider {
     if (!Cache.getCacheItem("initAvatar")) {
       let avatar = await SupabaseService.getAvatar();
       if (avatar.data === null) {
-        SupabaseService.initAvatar();
+        await SupabaseService.initAvatar();
       }
       Cache.setCacheItem("initAvatar", true);
     }
@@ -117,6 +119,22 @@ export default class DataProvider {
         await SupabaseService.addPlan();
       }
       Cache.setCacheItem("initPlan", true);
+    }
+  }
+
+  /**
+   * init points in user table for all gyms with value 0
+   * gets only called if 'initPoints' is not in the cache
+   */
+  static async initUserPoints() {
+    if(!Cache.getCacheItem("initPoints")) {
+      let pointsArray: { gymId: string; value: number; }[] = [];
+      let gyms: Gym[] | null = (await SupabaseService.getGyms()).gym;
+      gyms?.map(gym => {
+        pointsArray.push({gymId: gym.id.toString(), value: 0})
+      })
+      await SupabaseService.updateUserPoints(pointsArray);
+      Cache.setCacheItem("initPoints", true);
     }
   }
 }

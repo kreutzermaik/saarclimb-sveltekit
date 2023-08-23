@@ -32,7 +32,6 @@ export default class Session {
    */
   static async getCurrentUser(): Promise<any> {
     if (await this.getSession()) {
-      let sess: SupabaseSession = await this.getSession();
       await this.setCurrentUser((await this.getSession()).user);
       return this.currentUser;
     }

@@ -139,6 +139,7 @@
      */
     async function onUpdate() {
         await fetchAllUsers();
+        sortUsers();
     }
 
     /**
