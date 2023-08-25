@@ -5,6 +5,8 @@
   import SupabaseService from "../api/supabase-service";
   import Header from "../lib/features/Header.svelte";
   import Session from "../session";
+  import DataProvider from "../data-provider";
+  import {onMount} from "svelte";
 
   let isLoggedIn: boolean = false;
 
@@ -29,7 +31,10 @@
     }
   }
 
-  initLoggedIn();
+  onMount(async () => {
+    await initLoggedIn();
+    await DataProvider.initUserData();
+  })
 </script>
 
 <div>

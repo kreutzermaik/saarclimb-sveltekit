@@ -8,6 +8,7 @@
     import Notification from "$lib/ui/Notification";
     import Button from "$lib/ui/Button.svelte";
     import {onDestroy, onMount} from "svelte";
+    import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
 
     let subscription: any | null;
 
@@ -16,6 +17,7 @@
     let currentGym: Gym;
     let selectedGym: any;
     let progress: Progress[] = [];
+    let color: string = '';
 
     /**
      * fetch gym for current user
@@ -66,13 +68,16 @@
     /**
      * update gym name in the select field
      * update different values that are affected by the gym change
-     * @param gym
+     * @param e
      */
-    async function changeGym(gym: string) {
+    async function changeGym(e: any) {
+        const gym = e.target.value;
         selectedGym = gym;
         const {id, logo, grades} = (await SupabaseService.getGymByName(gym)).gym;
-        if (usersGym !== undefined && usersGym.gym === null)
+        usersGym = await fetchUsersCurrentGym();
+        if (usersGym !== undefined && usersGym.gym !== null) {
             await SupabaseService.updateUserGym(id);
+        }
         currentGym = {id: id, name: gym, logo: logo, grades: grades};
         await fetchProgress(id);
         Cache.setCacheItem("currentGym", currentGym);
@@ -101,7 +106,7 @@
     async function updateProgress(value: number, grade: string) {
         progress.map((item: Progress) => {
             if (item.gymid === currentGym.id) {
-                item.progress.find((item: any) => item.grade === grade).value = value;
+                item.progress.find((item: ProgressItem) => item.grade === grade).value = value;
             }
         });
 
@@ -114,9 +119,8 @@
         let currentUserPointsArray = await SupabaseService.getCurrentPoints();
         currentUserPointsArray.points?.points.map((item: any) => {
             if (Cache.getCacheItem("currentGym")) {
-                if (item.gymId === JSON.parse(Cache.getCacheItem("currentGym")).id) {
+                if (Number(item.gymId) === JSON.parse(Cache.getCacheItem("currentGym")).id) {
                     item.value = calculatePoints();
-                    console.log(item);
                 }
             }
         });
@@ -165,6 +169,40 @@
             inputElement.value = newValue;
             updateProgress(newValue, item.grade);
         }
+    }
+
+    /**
+     * hotfix for <Chip/> Bug
+     * @param color
+     */
+    function setColor(color: string) {
+        switch (color) {
+            case 'GRÜN':
+                color = 'bg-custom-green text-white border-2 border-gray-400';
+                break;
+            case 'GELB':
+                color = 'bg-custom-yellow text-white border-2 border-gray-400';
+                break;
+            case 'ORANGE':
+                color = 'bg-custom-orange text-white border-2 border-gray-400';
+                break;
+            case 'BLAU':
+                color = 'bg-custom-blue text-white border-2 border-gray-400';
+                break;
+            case 'WEISS':
+                color = 'bg-white text-black border-2 border-gray-400';
+                break;
+            case 'TÜRKIS':
+                color = 'bg-custom-turquiose text-white border-2 border-gray-400';
+                break;
+            case 'SCHWARZ':
+                color = 'bg-black text-white border-2 border-gray-400';
+                break;
+            case 'ROT':
+                color = 'bg-custom-red text-white border-2 border-gray-400';
+                break;
+        }
+        return color;
     }
 
     /**
@@ -239,7 +277,7 @@
         </label>
         <select
                 id="gyms"
-                on:change={e => changeGym(e.target.value)}
+                on:change={e => changeGym(e)}
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
             <option selected>
@@ -284,7 +322,7 @@
                                         name="number"
                                         id={`input-${progressItem.grade}`}
                                         min={0}
-                                        on:change={e => updateProgress(e?.target?.value, progressItem.grade)}
+                                        on:change={e => updateProgress(e.target?.value, progressItem.grade)}
                                         value={progressItem.value}
                                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5 mr-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-14 lg:w-44"
                                 />
@@ -299,10 +337,9 @@
                             </td>
                             <td class="px-3 py-2 w-9/12">
                                 <div class="flex gap-5">
-                                    <Chip
-                                            text={progressItem.grade.toUpperCase()}
-                                            color={progressItem.grade.toUpperCase()}
-                                    />
+                                    <div class={`${setColor(progressItem.grade.toUpperCase())} p-2.5 rounded-md w-full`}>
+                                        {progressItem.grade.toUpperCase()}
+                                    </div>
                                 </div>
                             </td>
                         </tr>

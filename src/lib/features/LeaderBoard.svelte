@@ -62,7 +62,7 @@
 
     /**
      * sort users by points
-     * @returns {User[]}
+     * @returns
      */
     function sortUsers() {
         let currentGymObj: Gym;
@@ -139,6 +139,7 @@
      */
     async function onUpdate() {
         await fetchAllUsers();
+        sortUsers();
     }
 
     /**

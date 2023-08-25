@@ -5,7 +5,7 @@ import Session from "../session";
 export default class SupabaseService {
   public static async addUser(user: any) {
     const { data, error } = await supabase.from("users")
-      .insert(user)
+      .upsert(user)
     return { data, error };
   }
 
@@ -59,7 +59,7 @@ export default class SupabaseService {
       .eq("uid", await Session.getCurrentUserId());
   }
 
-  public static async updateUserGym(gymId: number) {
+  public static async  updateUserGym(gymId: number) {
     const { data, error } = await supabase
       .from("users")
       .update({ gym: gymId })
