@@ -10,16 +10,6 @@
 
   let isLoggedIn: boolean = false;
 
-  async function fetchAllUsers() {
-    try {
-      let result = (await SupabaseService.getAllUsers()).users;
-      console.log(result);
-      return result;
-    } catch (err: any) {
-      console.log(err);
-    }
-  }
-
   /**
    * initialize isLoggedIn variable
    */

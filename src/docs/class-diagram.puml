@@ -1,0 +1,166 @@
+@startuml
+allowmixing
+
+class Auth {
+  - name: String
+  - email: String
+  - password: String
+  - type: String
+  + loginWithGoogle()
+  + registerWithEmail()
+  + loginWithEmail()
+}
+
+class Calendar {
+  - subscription: any
+  - calendarEl: any
+  - events: any
+  - selectedDate: any
+  - name: String
+  + createCalendar(): void
+  + fetchEvents(): Promise<any>
+  + parseAndSetEvents(eventList: any): any[]
+  + handleDateClick(event: any): void
+  + openDialog(): void
+  + onInsert(payload: any): void
+  + onUpdate(): void
+  + onDelete(payload: any): void
+}
+
+class LeaderBoard {
+    - subscription: any
+    - users: User[]
+    - sortedUsers: User[]
+    - gyms: Gym[]
+    - usersGym: any
+    - currentGym: Gym
+    - selectedGym: any
+    + fetchAllUsers(): void
+    + fetchUsersCurrentGym(): Promise<any>
+    + fetchGyms(): Promise<Gym[]>
+    + sortUsers(): User[]
+    + changeGym(gym: String)
+    + onInsert(payload: any): void
+    + onUpdate(): void
+    + onDelete(payload: any): void
+}
+
+class AddEventDialog {
+  - propsDate: any;
+  - date: String;
+  - event: String;
+  - location: String;
+  - gyms: Gym[];
+  + setLocation(e: any): void
+  + setEvent(e: any): void
+  + setDate(e: any): void
+  + fetchGyms(): Promise<Gym[]>
+  + addEvent(): void
+  + closeDialog(): void
+}
+
+class Planer {
+    - subscription: any
+    - plan: Plan[]
+    + fetchPlan(): Plan[]
+    + setInputValue(element: HTMLInputElement, day: Plan): void
+    + updatePlan(): void
+    + resetPlan(): void
+    + resetDay(day: Plan): void
+    + onInsert(payload: any): void
+    + onUpdate(): void
+    + onDelete(payload: any): void
+}
+
+class PlanerCompact {
+    - subscription: any
+    - plan: Plan[]
+    + fetchPlan(): void
+    + updatePlan(day: Plan): void
+    + isDayPast(day: Plan): boolean
+    + onInsert(payload: any): void
+    + onUpdate(): void
+    + onDelete(payload: any): void
+}
+
+class ProgressCard {
+    - subscription: any
+    - gyms: Gym[]
+    - usersGym: any
+    - currentGym: Gym
+    - selectedGym: any
+    - progress: Progress[]
+    - color: String
+    + fetchUsersCurrentGym(): Promise<Gym>
+    + fetchGyms(): Promise<Gym[]>
+    + fetchProgress(gymId: number): Promise<Progress[]>
+    + changeGym(e: any): void
+    + initProgressDataForGym(grades: ProgressItem[]): void
+    + updateProgress(value: number, grade: string): void
+    + calculatePoints(): number
+    + incrementValue(item: ProgressItem): void
+    + decrementValue(item: ProgressItem): void
+    + setColor(color: String): String
+    + onInsert(payload: any): void
+    + onUpdate(): void
+    + onDelete(payload: any): void
+}
+
+login --> Auth
+register --> Auth
+index --> Calendar
+index --> PlanerCompact
+board --> LeaderBoard
+plan --> Planer
+progress --> ProgressCard
+Calendar --> AddEventDialog
+
+
+class login {
+  - Auth: Component
+}
+
+class register {
+  - Auth: Component
+}
+
+class index {
+  - isLoggedIn: boolean
+  - PlanerCompact: Component
+  - Calendar: Component
+  + initLoggedIn(): void
+}
+
+class board {
+  - LeaderBoard: Component
+}
+
+class plan {
+  - isLoggedIn: boolean
+  - Planer: Component
+  + initLoggedIn(): void
+}
+
+class profile {
+  - user: User
+  - avatar: string
+  - userPoints: number
+  + getSummedPoints(): Promise<number>
+  + handleUpload(e: any): void
+  + openDialog(): void
+  + closeDialog(): void
+}
+
+class progress {
+  - isLoggedIn: boolean
+  - ProgressCard: Component
+}
+
+class settings {
+  + logout(): void
+}
+
+
+
+
+@enduml

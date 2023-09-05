@@ -21,6 +21,7 @@
         <button class="btn btn-error">
           <a
             href="/login"
+            id="goto-login"
             class="font-medium text-primary-600 hover:underline dark:text-primary-500"
             >Zum Login</a>
         </button>

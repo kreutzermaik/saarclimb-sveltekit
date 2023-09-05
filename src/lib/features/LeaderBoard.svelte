@@ -21,7 +21,7 @@
     /**
      * fetch all users
      */
-    async function fetchAllUsers() {
+async function fetchAllUsers() {
         try {
             let result = (await SupabaseService.getAllUsers()).users;
             users = result as User[];

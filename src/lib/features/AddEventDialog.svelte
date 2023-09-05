@@ -51,7 +51,7 @@
         userid: await Session.getCurrentUserId(),
         location: location,
       };
-      SupabaseService.addEvent(newEvent);
+      await SupabaseService.addEvent(newEvent);
       closeDialog();
       Notification.show(Notification.EVENT_ADDED_MESSAGE);
     } catch (err: any) {

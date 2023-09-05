@@ -5,11 +5,11 @@
     import Session from "../../session.js";
     import ProgressCard from "$lib/features/ProgressCard.svelte";
 
-    let loggedIn: boolean = false;
+    let isLoggedIn: boolean = false;
 
     onMount(async () => {
         if (await Session.isLoggedIn()) {
-            loggedIn = true;
+            isLoggedIn = true;
         }
     });
 </script>
@@ -17,7 +17,7 @@
 <main class="text-center text-gray-700">
     <Header headerText="Fortschritt"/>
 
-    {#if loggedIn}
+    {#if isLoggedIn}
         <ProgressCard/>
     {:else}
         <NotLoggedIn/>
