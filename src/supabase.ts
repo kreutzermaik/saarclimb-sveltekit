@@ -8,7 +8,7 @@ if (dev) {
     supabaseUrl = import.meta.env.VITE_DEV_SUPABASE_URL;
     supabaseAnonKey = import.meta.env.VITE_DEV_SUPABASE_ANON_KEY;
 } else {
-    supabaseUrl = import.meta.env.VITE_SUPABASE_ANON_KEY;
+    supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
     supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 }
 
