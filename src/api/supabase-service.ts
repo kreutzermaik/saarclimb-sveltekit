@@ -51,12 +51,11 @@ export default class SupabaseService {
         return {points, error};
     }
 
-    public static async updateUserPoints(points: any) {
-        let {data, error} = await supabase
+    public static async updateUserPoints(points: any): Promise<void> {
+       await supabase
             .from("users")
             .update({points: points})
             .eq("uid", await Session.getCurrentUserId())
-        return {points, error};
     }
 
     public static async updateUser(avatarUrl: string): Promise<void> {

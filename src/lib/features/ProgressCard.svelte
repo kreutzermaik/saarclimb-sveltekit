@@ -103,6 +103,7 @@
      * @param grade
      */
     async function updateProgress(value: number, grade: string) {
+        console.log("update...")
         progress.map((item: Progress) => {
             if (item.gymid === currentGym.id) {
                 item.progress.find((item: ProgressItem) => item.grade === grade).value = value;
@@ -120,9 +121,14 @@
             if (Cache.getCacheItem("currentGym")) {
                 if (Number(item.gymId) === JSON.parse(Cache.getCacheItem("currentGym")).id) {
                     item.value = calculatePoints();
+                    console.log(item.value)
+                    console.log(calculatePoints())
                 }
             }
         });
+
+        console.log(selectedGym)
+
 
         await SupabaseService.updateUserPoints(currentUserPointsArray.points?.points);
     }
@@ -249,6 +255,7 @@
 
         currentGym = {id: id, name: name, logo: logo, grades: grades};
         await fetchProgress(currentGymId);
+        Cache.setCacheItem("currentGym", currentGym);
     });
 
     onDestroy(() => {

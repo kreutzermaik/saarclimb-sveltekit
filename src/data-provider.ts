@@ -8,7 +8,7 @@ export default class DataProvider {
     /**
      * init user data that is required for the app
      */
-    static async initUserData() {
+    static async initUserData(): Promise<void> {
         if (await Session.getCurrentUser()) {
             if ((await Session.getCurrentUser()).name === undefined) {
                 await Session.updateUserInSession(JSON.parse(Cache.getCacheItem("username")));
@@ -22,7 +22,7 @@ export default class DataProvider {
     /**
      * update avatar url in cache
      */
-    static async updateAvatarUrlInCache() {
+    static async updateAvatarUrlInCache(): Promise<void> {
         let url = (await SupabaseService.getAvatar()).data?.signedUrl;
         Cache.setCacheItem("userImage", url);
         if (url) await this.updateUserWithAvatarUrl(url);
@@ -32,7 +32,7 @@ export default class DataProvider {
      * update user table with avatar_url
      * @param avatarUrl
      */
-    static async updateUserWithAvatarUrl(avatarUrl: string) {
+    static async updateUserWithAvatarUrl(avatarUrl: string): Promise<void> {
         await SupabaseService.updateUser(avatarUrl);
     }
 
@@ -40,7 +40,7 @@ export default class DataProvider {
      * add plan if not exists
      * gets only called if 'initPlan' is not in the cache
      */
-    static async addPlan() {
+    static async addPlan(): Promise<void> {
         if (!Cache.getCacheItem("initPlan")) {
             let plan = await SupabaseService.getPlan();
             if (plan.planer === null) {
@@ -54,14 +54,17 @@ export default class DataProvider {
      * init points in user table for all gyms with value 0
      * gets only called if 'initPoints' is not in the cache
      */
-    static async initUserPoints() {
+    static async initUserPoints(): Promise<void> {
         if (!Cache.getCacheItem("initPoints")) {
-            let pointsArray: { gymId: string; value: number; }[] = [];
-            let gyms: Gym[] | null = (await SupabaseService.getGyms()).gym;
-            gyms?.map(gym => {
-                pointsArray.push({gymId: gym.id.toString(), value: 0})
-            })
-            await SupabaseService.updateUserPoints(pointsArray);
+            let user = await SupabaseService.getCurrentPoints();
+            if (!user?.points?.points) {
+                let pointsArray: { gymId: string; value: number; }[] = [];
+                let gyms: Gym[] | null = (await SupabaseService.getGyms()).gym;
+                gyms?.map((gym: Gym): void => {
+                    pointsArray.push({gymId: gym.id.toString(), value: 0})
+                })
+                await SupabaseService.updateUserPoints(pointsArray);
+            }
             Cache.setCacheItem("initPoints", true);
         }
     }
