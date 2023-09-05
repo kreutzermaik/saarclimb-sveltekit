@@ -8,8 +8,9 @@
     import Session from "../../session";
     import Cache from "../../cache";
     import {onMount, onDestroy} from "svelte";
+    import type {RealtimeChannel} from "@supabase/supabase-js";
 
-    let subscription: any;
+    let subscription: RealtimeChannel;
 
     $: users = [];
     let sortedUsers: User[] = [];
@@ -143,24 +144,17 @@ async function fetchAllUsers() {
     }
 
     /**
-     * on subscription delete
-     * @param payload
-     */
-    function onDelete(payload: any) {
-        // setUsers((prev) => prev.filter((item) => item.uid != payload.old.uid));
-    }
-
-    /**
      * gets called on init
      */
     onMount(async () => {
         subscription = SupabaseService.subscribeToTable(
-            "users",
+            "progress",
             "users-channel",
             onInsert,
-            onUpdate,
-            onDelete
+            onUpdate
         );
+        subscription.subscribe();
+
         await fetchAllUsers();
         await fetchGyms();
 
@@ -193,7 +187,7 @@ async function fetchAllUsers() {
      * 2) navigation to another page
      */
     onDestroy(() => {
-        subscription?.unsubscribe();
+        subscription.unsubscribe();
     });
 </script>
 

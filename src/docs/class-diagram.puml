@@ -12,7 +12,7 @@ class Auth {
 }
 
 class Calendar {
-  - subscription: any
+  - subscription: RealtimeChannel
   - calendarEl: any
   - events: any
   - selectedDate: any
@@ -24,11 +24,10 @@ class Calendar {
   + openDialog(): void
   + onInsert(payload: any): void
   + onUpdate(): void
-  + onDelete(payload: any): void
 }
 
 class LeaderBoard {
-    - subscription: any
+    - subscription: RealtimeChannel
     - users: User[]
     - sortedUsers: User[]
     - gyms: Gym[]
@@ -42,7 +41,6 @@ class LeaderBoard {
     + changeGym(gym: String)
     + onInsert(payload: any): void
     + onUpdate(): void
-    + onDelete(payload: any): void
 }
 
 class AddEventDialog {
@@ -60,7 +58,7 @@ class AddEventDialog {
 }
 
 class Planer {
-    - subscription: any
+    - subscription: RealtimeChannel
     - plan: Plan[]
     + fetchPlan(): Plan[]
     + setInputValue(element: HTMLInputElement, day: Plan): void
@@ -69,22 +67,20 @@ class Planer {
     + resetDay(day: Plan): void
     + onInsert(payload: any): void
     + onUpdate(): void
-    + onDelete(payload: any): void
 }
 
 class PlanerCompact {
-    - subscription: any
+    - subscription: RealtimeChannel
     - plan: Plan[]
     + fetchPlan(): void
     + updatePlan(day: Plan): void
     + isDayPast(day: Plan): boolean
     + onInsert(payload: any): void
     + onUpdate(): void
-    + onDelete(payload: any): void
 }
 
 class ProgressCard {
-    - subscription: any
+    - subscription: RealtimeChannel
     - gyms: Gym[]
     - usersGym: any
     - currentGym: Gym
@@ -103,8 +99,7 @@ class ProgressCard {
     + setColor(color: String): String
     + onInsert(payload: any): void
     + onUpdate(): void
-    + onDelete(payload: any): void
-}
+ }
 
 login --> Auth
 register --> Auth

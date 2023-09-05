@@ -2,10 +2,11 @@ import type {Event} from "../types/Event";
 import {supabase} from "../supabase";
 import Session from "../session";
 import type {User} from "../types/User";
+import type {RealtimeChannel, RealtimePostgresChangesPayload} from "@supabase/supabase-js";
 
 export default class SupabaseService {
-    public static async addUser(user: User) {
-        const {data, error} = await supabase
+    public static async addUser(user: User): Promise<void> {
+        await supabase
             .from("users")
             .upsert({
                 uid: user.uid,
@@ -13,7 +14,6 @@ export default class SupabaseService {
                 name: user.name,
                 avatar_url: user.avatar_url,
             })
-        return {data, error};
     }
 
     public static async getAllUsers() {
@@ -59,22 +59,22 @@ export default class SupabaseService {
         return {points, error};
     }
 
-    public static async updateUser(avatarUrl: string) {
-        const {data, error} = await supabase
+    public static async updateUser(avatarUrl: string): Promise<void> {
+        await supabase
             .from("users")
             .update({avatar_url: avatarUrl})
             .eq("uid", await Session.getCurrentUserId());
     }
 
-    public static async updateUserGym(gymId: number) {
-        const {data, error} = await supabase
+    public static async updateUserGym(gymId: number): Promise<void> {
+        await supabase
             .from("users")
             .update({gym: gymId})
             .eq("uid", await Session.getCurrentUserId());
     }
 
-    public static async addPlan() {
-        const {data, error} = await supabase
+    public static async addPlan(): Promise<void> {
+        await supabase
             .from("planer")
             .insert([{uid: await Session.getCurrentUserId()}]);
     }
@@ -88,46 +88,11 @@ export default class SupabaseService {
         return {planer, error};
     }
 
-    public static async updatePlan(plan: any) {
-        const {data, error} = await supabase
+    public static async updatePlan(plan: any): Promise<void> {
+        await supabase
             .from("planer")
             .update({plan: plan})
             .eq("uid", await Session.getCurrentUserId());
-    }
-
-    public static subscribeToTable(
-        table: string,
-        channel: string,
-        onInsert?: any,
-        onUpdate?: any,
-        onDelete?: any
-    ) {
-        let subscription: any;
-        supabase
-            .channel(channel)
-            .on(
-                "postgres_changes",
-                {
-                    event: "*",
-                    schema: "public",
-                    table: table,
-                },
-                (payload) => {
-                    switch (payload.eventType) {
-                        case "INSERT":
-                            onInsert(payload);
-                            break;
-                        case "UPDATE":
-                            onUpdate();
-                            break;
-                        case "DELETE":
-                            onDelete(payload);
-                            break;
-                    }
-                }
-            )
-            .subscribe();
-        return subscription;
     }
 
     public static async getAvatarBucket() {
@@ -150,18 +115,17 @@ export default class SupabaseService {
         return {data, error};
     }
 
-    public static async updateAvatar(file: any) {
-        const {data, error} = await supabase.storage
+    public static async updateAvatar(file: any): Promise<void> {
+        await supabase.storage
             .from("avatars")
             .update(await Session.getCurrentUserId(), file as File);
     }
 
-    public static async addEvent(event: Event) {
-        const {data, error} = await supabase
+    public static async addEvent(event: Event): Promise<void> {
+        await supabase
             .from("events")
             .insert(event)
             .eq("userid", await Session.getCurrentUserId());
-        return {data, error};
     }
 
     public static async getEvents() {
@@ -186,8 +150,8 @@ export default class SupabaseService {
         return {progress, error};
     }
 
-    public static async insertProgress(progress: any, gymId: number) {
-        const {data, error} = await supabase
+    public static async insertProgress(progress: any, gymId: number): Promise<void> {
+        await supabase
             .from("progress")
             .upsert({
                 progress: progress,
@@ -196,8 +160,8 @@ export default class SupabaseService {
             });
     }
 
-    public static async updateProgress(progress: any, gymId: number) {
-        const {data, error} = await supabase
+    public static async updateProgress(progress: any, gymId: number): Promise<void> {
+        await supabase
             .from("progress")
             .update({progress: progress})
             .eq("gymid", gymId)
@@ -229,5 +193,35 @@ export default class SupabaseService {
             .eq("name", gymName)
             .single();
         return {gym, error};
+    }
+
+    /**
+     * Subscribe to changes in a table
+     * @param table
+     * @param channel
+     * @param onInsert
+     * @param onUpdate
+     */
+    public static subscribeToTable(table: string, channel: string, onInsert?: any, onUpdate?: any): RealtimeChannel {
+        return supabase
+            .channel(channel)
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: table,
+                },
+                (payload: RealtimePostgresChangesPayload<any>) => {
+                    switch (payload.eventType) {
+                        case "INSERT":
+                            onInsert(payload);
+                            break;
+                        case "UPDATE":
+                            onUpdate();
+                            break;
+                    }
+                }
+            );
     }
 }

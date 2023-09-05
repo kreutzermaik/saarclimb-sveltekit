@@ -3,14 +3,13 @@
     import type {Gym} from "../../types/Gym";
     import type {Progress} from "../../types/Progress";
     import type {ProgressItem} from "../../types/ProgressItem";
-    import Chip from "$lib/ui/Chip.svelte";
     import Cache from "../../cache";
     import Notification from "$lib/ui/Notification";
     import Button from "$lib/ui/Button.svelte";
     import {onDestroy, onMount} from "svelte";
-    import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
+    import type {RealtimeChannel} from "@supabase/supabase-js";
 
-    let subscription: any | null;
+    let subscription: RealtimeChannel;
 
     let gyms: Gym[] = [];
     let usersGym: any;
@@ -58,7 +57,7 @@
     async function fetchProgress(gymId: number) {
         try {
             let result = (await SupabaseService.getProgress(gymId)).progress;
-            progress = result as Progress[];
+            if (result) progress = result as Progress[];
             return progress;
         } catch (err: any) {
             console.log(err);
@@ -220,24 +219,14 @@
         await fetchProgress(currentGym.id);
     }
 
-    /**
-     * on subscription delete
-     * @param payload
-     */
-    function onDelete(payload: any) {
-        /*     setProgress((prev: any) =>
-                 prev.filter((item: any) => item.id != payload.old.id)
-             );*/
-    }
-
     onMount(async () => {
         subscription = SupabaseService.subscribeToTable(
             "progress",
             "progress-channel",
             onInsert,
-            onUpdate,
-            onDelete
+            onUpdate
         );
+        subscription.subscribe();
 
         await fetchGyms();
 
@@ -263,7 +252,7 @@
     });
 
     onDestroy(() => {
-        subscription?.unsubscribe();
+        subscription.unsubscribe();
     });
 
 </script>

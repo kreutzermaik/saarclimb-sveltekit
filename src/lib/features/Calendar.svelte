@@ -6,8 +6,9 @@
   import SupabaseService from "../../api/supabase-service";
   import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
   import AddEventDialog from "./AddEventDialog.svelte";
+  import type {RealtimeChannel} from "@supabase/supabase-js";
 
-  let subscription: any;
+  let subscription: RealtimeChannel;
   let calendarEl: any;
   let events: any = [];
   let selectedDate: any;
@@ -86,28 +87,18 @@
   }
 
   /**
-   * on subscription delete
-   * @param payload
-   */
-  function onDelete(payload: any) {
-    // setEvents((prev: any) =>
-    //   prev.filter((item: any) => item.id != payload.old.id)
-    // );
-  }
-
-  /**
    * subscribe to events table on mount
    */
   onMount(async () => {
-    events = await fetchEvents();
-
     subscription = SupabaseService.subscribeToTable(
       "events",
       "event-channel",
       onInsert,
-      onUpdate,
-      onDelete
+      onUpdate
     );
+    subscription.subscribe();
+
+    events = await fetchEvents();
 
     if (events) {
       createCalendar();
@@ -118,7 +109,7 @@
    * remove subscription on cleanup
    */
   onDestroy(() => {
-    subscription?.unsubscribe();
+    subscription.unsubscribe();
   });
 </script>
 

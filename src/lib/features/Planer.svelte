@@ -8,8 +8,9 @@
   import ResetIcon from "$lib/ui/icons/ResetIcon.svelte";
   import Button from "$lib/ui/Button.svelte";
   import InfoIcon from "$lib/ui/icons/InfoIcon.svelte";
+  import type {RealtimeChannel} from "@supabase/supabase-js";
 
-  let subscription: any | null;
+  let subscription: RealtimeChannel;
 
   let plan: Plan[] = [];
 
@@ -105,24 +106,14 @@
     Cache.setCacheItem("plan", plan);
   }
 
-  /**
-   * on subscription delete
-   * @param payload
-   */
-  function onDelete(payload: any) {
-    // setPlan((prev: any) =>
-    //   prev.filter((item: any) => item.day != payload.old.day)
-    // );
-  }
-
   onMount(async () => {
     subscription = SupabaseService.subscribeToTable(
-      "planer",
-      "planner-channel",
-      onInsert,
-      onUpdate,
-      onDelete
+            "progress",
+            "planer-channel",
+            onInsert,
+            onUpdate
     );
+    subscription.subscribe();
 
     plan = await fetchPlan();
 
@@ -135,7 +126,7 @@
   });
 
   onDestroy(() => {
-    subscription?.unsubscribe();
+    subscription.unsubscribe();
     Cache.removeCacheItem("plan");
   });
 </script>
