@@ -13,8 +13,10 @@
     const cacheAvatar = Cache.getCacheItem("userImage");
     if (cacheAvatar) avatar = JSON.parse(cacheAvatar);
     else {
-      avatar = (await SupabaseService.getCurrentAvatarUrl()).avatar_url?.avatar_url;
-      Cache.setCacheItem("userImage", JSON.stringify(avatar));
+      if (isLoggedIn) {
+        avatar = (await SupabaseService.getCurrentAvatarUrl()).avatar_url?.avatar_url;
+        Cache.setCacheItem("userImage", JSON.stringify(avatar));
+      }
     }
     if (await Session.isLoggedIn()) {
       isLoggedIn = true;

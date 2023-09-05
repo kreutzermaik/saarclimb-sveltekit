@@ -23,7 +23,9 @@
 
   onMount(async () => {
     await initLoggedIn();
-    await DataProvider.initUserData();
+    if (isLoggedIn) {
+      await DataProvider.initUserData();
+    }
   })
 </script>
 

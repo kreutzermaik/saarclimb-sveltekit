@@ -150,7 +150,7 @@
                                         </div>
                                     </button>
                                 {:else if !item.checked}
-                                    <div class="tooltip tooltip-bottom tooltip-primary mb-4" data-tip="Kein Workout geplant">
+                                    <div class={`tooltip ${item.day === "Montag" ? 'tooltip-right' : item.day === "Sonntag" ? 'tooltip-left' : 'tooltip-bottom'} tooltip-primary mb-4`} data-tip="Kein Workout geplant">
                                         <UnusedIcon/>
                                     </div>
                                 {/if}

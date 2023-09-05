@@ -1,0 +1,43 @@
+/// <reference types="cypress" />
+
+describe('progress spec', () => {
+    it('passes', () => {
+        /**
+         * Login
+         */
+        cy.visit('/');
+        cy.wait(2000);
+        cy.get('#goto-login').should('be.visible').click();
+        cy.wait(1000);
+        cy.get('#email-field').should('be.visible').type('cypress@user.com');
+        cy.wait(1000);
+        cy.get('#password-field').should('be.visible').type('test123');
+        cy.wait(1000);
+        cy.get('#login button').should('be.visible').click();
+        cy.wait(2000);
+
+        /**
+         * Progress
+         */
+        cy.visit('/progress');
+        cy.wait(2000);
+        cy.get('.minus-button').click({multiple: true});
+        cy.get('.minus-button').click({multiple: true});
+        cy.wait(2000);
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.wait(2000);
+        // switch gym
+        cy.get('#gyms').select('Boulder Olymp');
+        cy.get('.minus-button').click({multiple: true});
+        cy.get('.minus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+        cy.get('.plus-button').click({multiple: true});
+    })
+})
