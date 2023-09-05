@@ -2,89 +2,21 @@ import SupabaseService from "./api/supabase-service";
 import Cache from "./cache";
 import Session from "./session";
 import type {Gym} from "./types/Gym";
+import type {User} from "./types/User";
 
 export default class DataProvider {
     /**
      * init user data that is required for the app
      */
     static async initUserData() {
-        if (this.checkProvider() === "google") {
-            console.log("init google user...")
-            await this.initGoogleUser();
-        }
         if (await Session.getCurrentUser()) {
             if ((await Session.getCurrentUser()).name === undefined) {
                 await Session.updateUserInSession(JSON.parse(Cache.getCacheItem("username")));
             }
         }
-        await this.addAvatar();
-        await this.addAvatarUrlToCache();
+        await SupabaseService.addUser(await Session.getCurrentUser() as User);
         await this.addPlan();
         await this.initUserPoints();
-    }
-
-    /**
-     * returns provider from cache
-     * @returns
-     */
-    static checkProvider(): string {
-        if (Cache.getCacheItem("sb-ybeongwjjfdkgizzkmsc-auth-token")) {
-            return JSON.parse(
-                Cache.getCacheItem("sb-ybeongwjjfdkgizzkmsc-auth-token")
-            ).user.app_metadata.provider;
-        }
-        return "";
-    }
-
-    /**
-     * init google user with data from cache
-     */
-    static async initGoogleUser() {
-        let user = JSON.parse(
-            Cache.getCacheItem("sb-ybeongwjjfdkgizzkmsc-auth-token")
-        ).user;
-        await SupabaseService.addUser({
-            uid: user?.id,
-            email: user?.email,
-            name: user?.user_metadata["full_name"],
-            avatar_url: user?.user_metadata["avatar_url"],
-        });
-    }
-
-    /**
-     * add avatar if not exists
-     * gets only called if 'initAvatar' is not in the cache
-     */
-    static async addAvatar() {
-        if (!Cache.getCacheItem("initAvatar")) {
-            let avatar = await SupabaseService.getAvatar();
-            if (avatar.data === null) {
-                await SupabaseService.initAvatar();
-            }
-            Cache.setCacheItem("initAvatar", true);
-        }
-    }
-
-    /**
-     * add avatar url to cache with the key 'userImage'
-     * gets only called if 'userImage' is not in the cache
-     * if provider is google, the avatar url is taken from the session
-     */
-    static async addAvatarUrlToCache() {
-        if (!Cache.getCacheItem("userImage")) {
-            if (this.checkProvider() === "google") {
-                let currentAvatarUrl = (await SupabaseService.getCurrentAvatarUrl())
-                    .avatar_url?.avatar_url;
-                Cache.setCacheItem("userImage", currentAvatarUrl);
-            } else {
-                let data = await SupabaseService.getAvatar();
-                if (data.data) {
-                    let url = data.data.signedUrl;
-                    await this.updateUserWithAvatarUrl(url);
-                    Cache.setCacheItem("userImage", url);
-                }
-            }
-        }
     }
 
     /**
