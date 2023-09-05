@@ -1,38 +1,49 @@
-# create-svelte
+# SaarClimb - SvelteKit
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+> 🌐 PWA: [https://sveltekit-saarclimb.netlify.app/](https://sveltekit-saarclimb.netlify.app/)
+>
+> 👷‍♀️In dieser README wird die Architektur des Projektes erklärt
 
-## Creating a project
+## 📄 Allgemein
+- Dieses Projekt entsteht im Rahmen meiner Masterthesis
+- Hierfür wird eine Web-App entwickelt, die Boulderer und Sportler beim Planen und Dokumentieren von Klettertouren unterstützt
+- Die App wird in den dreien JavaScript Meta-Frameworks [SvelteKit](https://kit.svelte.dev/), [SolidStart](https://start.solidjs.com/getting-started/what-is-solidstart) und [Next.js](https://nextjs.org/) entwickelt und analysiert
+- SaarClimb ist eine PWA (Progressive Web App)
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 💻 Tech Stack
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+- Die Basis bildet das Meta-Framework [SvelteKit](https://kit.svelte.dev/)
+- Die Komponenten werden entsprechend mit TypeScript und HTML umgesetzt
+- Die Styles werden mit [TailwindCSS](https://tailwindcss.com/) geschrieben
+- Dynamische Datenanzeige wird durch die _Backend as a Service_ Plattform [Supabase](https://supabase.io/) realisiert
+- Dort stehen eine PostgreSQL Datenbank sowie ein Storage für Dateien und Möglichkeiten zur Authentifizierung zur Verfügung
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## 🗂️ Übersicht über die Komponenten
 
-## Developing
+- Die Komponenten befinden sich im Ordner `./src/lib/` 
+- Diese sind unterschieden in `Features` und `UI-Elemente`
+- Die Seiten befinden sich im Ordner `./src/routes/`
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## ⌘ Commands
 
-```bash
-npm run dev
+| Command           | Action                                                |
+|:------------------|:------------------------------------------------------|
+| `npm install`     | Abhängigkeiten installieren                           |
+| `npm run dev`     | Startet lokalen Server `http://localhost:5173/`       |
+| `npm run build`   | Bauprozess für die Produktion zum Ordner `./netlify/` |
+| `npm run preview` | Vorschau der gebauten App vor Deploy                  |
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## 🚀 Deployment
 
-## Building
+- Die Webseite wird mit dem Tool [Netlify](https://www.netlify.com/) deployed
+- Das GitHub-Repository der Webseite ist mit einem Netlify-Konto verknüpft
+- Wird ein neuer Commit auf den `master`-Branch gepusht, wird die Webseite automatisch neu gebaut und deployed
 
-To create a production version of your app:
+## 📝 License
 
-```bash
-npm run build
-```
+[MIT](https://choosealicense.com/licenses/mit/)
 
-You can preview the production build with `npm run preview`.
+## 📧 Kontakt
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+- [GitHub](https://github.com/kreutzermaik)
+- [LinkedIn](https://linkedin.com/in/maik-kreutzer-889a79197)
