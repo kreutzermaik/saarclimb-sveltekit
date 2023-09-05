@@ -1,7 +1,7 @@
 <script lang="ts">
     import ArrowDownIcon from "$lib/ui/icons/ArrowDownIcon.svelte";
     import InfoIcon from "$lib/ui/icons/InfoIcon.svelte";
-    import {onMount} from "svelte";
+    import {onDestroy, onMount} from "svelte";
     import SupabaseService from "../../api/supabase-service";
     import type {Plan} from "../../types/Plan";
     import FailedIcon from "$lib/ui/icons/FailedIcon.svelte";
@@ -9,9 +9,10 @@
     import CheckDisabledIcon from "$lib/ui/icons/CheckDisabledIcon.svelte";
     import CheckIcon from "$lib/ui/icons/CheckIcon.svelte";
     import UnusedIcon from "$lib/ui/icons/UnusedIcon.svelte";
+    import type {RealtimeChannel} from "@supabase/supabase-js";
 
     let plan: Plan[] = [];
-    let subscription: any;
+    let subscription: RealtimeChannel;
 
     /**
      * fetch data from SupabaseService
@@ -19,8 +20,7 @@
      */
     async function fetchPlan() {
         try {
-            let result = (await SupabaseService.getPlan()).planer.plan;
-            return result;
+            return (await SupabaseService.getPlan()).planer.plan;
         } catch (err: any) {
             console.log(err);
         }
@@ -76,23 +76,19 @@
         plan = await fetchPlan();
     }
 
-    /**
-     * on subscription delete
-     * @param payload
-     */
-    function onDelete(payload: any) {
-        // plan = (prev: any) => prev.filter((item: any) => item.day != payload.old.day);
-    }
-
     onMount(async () => {
         plan = await fetchPlan();
         subscription = SupabaseService.subscribeToTable(
             "planer",
             "planer-channel",
             onInsert,
-            onUpdate,
-            onDelete
+            onUpdate
         );
+        subscription.subscribe();
+    });
+
+    onDestroy(() => {
+        subscription.unsubscribe();
     });
 </script>
 

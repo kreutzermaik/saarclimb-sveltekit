@@ -103,7 +103,6 @@
      * @param grade
      */
     async function updateProgress(value: number, grade: string) {
-        console.log("update...")
         progress.map((item: Progress) => {
             if (item.gymid === currentGym.id) {
                 item.progress.find((item: ProgressItem) => item.grade === grade).value = value;
@@ -121,14 +120,9 @@
             if (Cache.getCacheItem("currentGym")) {
                 if (Number(item.gymId) === JSON.parse(Cache.getCacheItem("currentGym")).id) {
                     item.value = calculatePoints();
-                    console.log(item.value)
-                    console.log(calculatePoints())
                 }
             }
         });
-
-        console.log(selectedGym)
-
 
         await SupabaseService.updateUserPoints(currentUserPointsArray.points?.points);
     }
@@ -286,7 +280,12 @@
                 {/if}
             </option>
             {#each gyms as gym}
-                <option value={gym.name}>{gym.name}</option>
+                {#if Cache.getCacheItem("currentGym") && gym.name !== JSON.parse(Cache.getCacheItem("currentGym")).name}
+                    <option value={gym.name}>{gym.name}</option>
+                {:else if currentGym && gym.name !== currentGym.name}
+                    <option value={gym.name}>{gym.name}</option>
+                    {currentGym.name}
+                {/if}
             {/each}
         </select>
 
