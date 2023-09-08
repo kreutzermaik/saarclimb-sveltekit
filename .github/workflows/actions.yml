@@ -11,8 +11,8 @@ jobs:
 
     env:
       #repository secrets
-      SUPABASE_URL: ${{ secrets.SUPABASE_URL_ENV }}
-      SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_ENV }}
+      SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
     steps:
       - name: Checkout Repository
@@ -25,6 +25,11 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
+
+      - name: Debug
+        run: |
+          echo "SUPABASE_URL=$SUPABASE_URL"
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY"
 
       - name: Set Environment Variables
         run: |
