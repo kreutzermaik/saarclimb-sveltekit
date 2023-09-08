@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      #repository secrets
       SUPABASE_URL: ${{ secrets.SUPABASE_URL_ENV }}
       SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY_ENV }}
 
