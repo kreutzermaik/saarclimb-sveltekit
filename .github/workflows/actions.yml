@@ -25,7 +25,6 @@ jobs:
           node-version: '18'
 
       - uses: supabase/setup-cli@v1
-      - run: supabase link --project-ref $PROJECT_ID
 
       - name: Install Dependencies
         run: npm install
