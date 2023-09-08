@@ -36,8 +36,8 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "import.meta.env.VITE_SUPABASE_URL=$SUPABASE_URL" >> $GITHUB_ENV
-          echo "import.meta.env.VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> $GITHUB_ENV
+          echo "VITE_SUPABASE_URL=$SUPABASE_URL" >> $GITHUB_ENV
+          echo "VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> $GITHUB_ENV
 
       - name: Run Tests
         run: npm run ci:cy-run
