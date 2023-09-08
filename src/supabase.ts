@@ -12,4 +12,9 @@ if (dev) {
     supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 }
 
+if (!supabaseUrl || supabaseUrl == '' || supabaseUrl == undefined) {
+    supabaseUrl = 'https://ybeongwjjfdkgizzkmsc.supabase.co';
+    supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InliZW9uZ3dqamZka2dpenprbXNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzI4MjMzMzQsImV4cCI6MTk4ODM5OTMzNH0.NaSZptwqEuuAfhKmoCV_lHraA8nROlQmwKCxEHc8z34';
+}
+
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
