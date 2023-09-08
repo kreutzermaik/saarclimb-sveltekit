@@ -39,6 +39,10 @@
 - Das GitHub-Repository der Webseite ist mit einem Netlify-Konto verknüpft
 - Wird ein neuer Commit auf den `master`-Branch gepusht, wird die Webseite automatisch neu gebaut und deployed
 
+## 🖥️ CI/CD
+
+- GitHub Action Workflows werden für automatisierte Cypress-Tests verwendet
+
 ## 📝 License
 
 [MIT](https://choosealicense.com/licenses/mit/)
