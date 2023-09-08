@@ -7,13 +7,19 @@
     "build": "vite build",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "cy:run": "cypress run --browser chrome",
+    "cy:open": "cypress open",
+    "e2e": "cypress run",
+    "ci:start-server": "npm run dev",
+    "ci:cy-run": "start-server-and-test ci:start-server http://localhost:5173 cy:run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.8.0",
     "daisyui": "^2.51.3",
     "flowbite": "^1.6.3",
     "plantuml": "^0.0.2",
+    "start-server-and-test": "^2.0.0",
     "sweetalert2": "^11.7.20",
     "vite-plugin-pwa": "^0.16.4",
     "webworker": "^0.8.4"
