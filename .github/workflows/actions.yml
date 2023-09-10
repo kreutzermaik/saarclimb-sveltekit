@@ -9,6 +9,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      VITE_SUPABASE_URL: https://tqgufceactcswwkbjfjk.supabase.co
+      VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxZ3VmY2VhY3Rjc3d3a2JqZmprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzA2OTMyOTksImV4cCI6MTk4NjI2OTI5OX0.MRYORIJPYAwuRfISOKKsKqCnfABJqLaXT1cZQZ6ZAE4
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -17,6 +21,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '18'
+
+      - uses: supabase/setup-cli@v1
 
       - name: Install Dependencies
         run: npm install
