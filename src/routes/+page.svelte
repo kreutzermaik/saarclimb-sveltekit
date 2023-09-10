@@ -1,3 +1,8 @@
+<svelte:head>
+  <title>SaarClimb - Dashboard</title>
+  <meta name="description" content="Dashboard" />
+</svelte:head>
+
 <script lang="ts">
   import Calendar from "$lib/features/Calendar.svelte";
   import PlanerCompact from "$lib/features/PlanerCompact.svelte";

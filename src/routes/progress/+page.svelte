@@ -1,3 +1,8 @@
+<svelte:head>
+    <title>SaarClimb - Fortschritt</title>
+    <meta name="description" content="Fortschritt" />
+</svelte:head>
+
 <script lang="ts">
     import Header from "../../lib/features/Header.svelte";
     import NotLoggedIn from "$lib/ui/NotLoggedIn.svelte";

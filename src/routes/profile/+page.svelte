@@ -1,3 +1,8 @@
+<svelte:head>
+    <title>SaarClimb - Profil</title>
+    <meta name="description" content="Profil" />
+</svelte:head>
+
 <script lang="ts">
     import Header from "$lib/features/Header.svelte";
     import SupabaseService from "../../api/supabase-service";
@@ -45,6 +50,7 @@
 
     onMount(async () => {
         user = await Session.getCurrentUser();
+        console.log(user);
         if ($userPoints === 0) userPoints.set(await getSummedPoints());
     });
 

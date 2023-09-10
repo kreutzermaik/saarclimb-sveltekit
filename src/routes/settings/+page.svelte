@@ -1,3 +1,8 @@
+<svelte:head>
+  <title>SaarClimb - Einstellungen</title>
+  <meta name="description" content="Einstellungen" />
+</svelte:head>
+
 <script lang="ts">
   import Cache from "../../cache";
   import { supabase } from "../../supabase";

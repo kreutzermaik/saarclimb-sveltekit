@@ -1,3 +1,8 @@
+<svelte:head>
+  <title>SaarClimb - Registrieren</title>
+  <meta name="description" content="Registrieren" />
+</svelte:head>
+
 <script lang="ts">
   import Auth from "$lib/features/Auth.svelte";
 </script>

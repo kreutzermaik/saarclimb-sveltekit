@@ -1,7 +1,6 @@
 <script lang="ts">
     import {goto} from "$app/navigation";
     import {onMount} from "svelte";
-    import Session from "../../session";
     import SupabaseService from "../../api/supabase-service";
     import {userImage, isLoggedIn} from "../../store";
 

@@ -1,3 +1,8 @@
+<svelte:head>
+  <title>SaarClimb - Login</title>
+  <meta name="description" content="Login" />
+</svelte:head>
+
 <script lang="ts">
   import Auth from "$lib/features/Auth.svelte";
 </script>
