@@ -3,16 +3,14 @@
     import {onMount} from "svelte";
     import Session from "../../session";
     import SupabaseService from "../../api/supabase-service";
-    import {userImage} from "../../store";
+    import {userImage, isLoggedIn} from "../../store";
 
     export let headerText: string;
     let avatar: any;
-    let isLoggedIn: boolean = false;
 
     onMount(async () => {
-        if (await Session.isLoggedIn()) isLoggedIn = true;
         if ($userImage) avatar = JSON.parse($userImage);
-        else if (!$userImage && isLoggedIn) {
+        else if (!$userImage && $isLoggedIn) {
             avatar = (await SupabaseService.getCurrentAvatarUrl()).avatar_url?.avatar_url;
             $userImage = JSON.stringify(avatar);
         }
@@ -22,7 +20,7 @@
 
 <main class="bg-white mb-6">
     <div class="p-4 rounded-lg flex justify-between">
-        {#if isLoggedIn}
+        {#if $isLoggedIn}
             <button on:click={() => goto("/profile")}>
                 <div
                         class="userImage w-6 h-6"

@@ -3,7 +3,7 @@ import Cache from "./cache";
 import Session from "./session";
 import type {Gym} from "./types/Gym";
 import type {User} from "./types/User";
-import {userImage} from "./store";
+import {userImage, isLoggedIn} from "./store";
 
 export default class DataProvider {
     /**
@@ -18,6 +18,7 @@ export default class DataProvider {
         await SupabaseService.addUser(await Session.getCurrentUser() as User);
         await this.addPlan();
         await this.initUserPoints();
+        isLoggedIn.set(true);
     }
 
     /**

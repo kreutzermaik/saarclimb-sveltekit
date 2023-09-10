@@ -17,7 +17,7 @@
 
     function setName(event: any) {
         name = event.target.value;
-        Cache.setCacheItem('username', name);
+        username.set(name);
     }
 
     function setEmail(event: any) {

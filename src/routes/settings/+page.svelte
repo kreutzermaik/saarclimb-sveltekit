@@ -11,7 +11,7 @@
   async function logout() {
     const { error } = await supabase.auth.signOut();
     Cache.clearOnLogout();
-    goto("/login");
+    await goto("/login");
   }
 </script>
 

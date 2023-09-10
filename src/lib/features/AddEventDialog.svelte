@@ -1,17 +1,15 @@
 <script lang="ts">
-    import {onMount} from "svelte";
     import SupabaseService from "../../api/supabase-service";
     import Session from "../../session";
     import Notification from "../ui/Notification";
-    import type {Gym} from "../../types/Gym";
     import type {Event} from "../../types/Event";
     import Button from "$lib/ui/Button.svelte";
+    import {gyms} from "../../store";
 
     export let propsDate: any;
     $: date = "";
     $: event = "";
     $: location = "";
-    let gyms: Gym[] = [];
 
     function setLocation(e: any) {
         location = e.target.value;
@@ -23,20 +21,6 @@
 
     function setDate(e: any) {
         date = e.target.value;
-    }
-
-    async function fetchGyms() {
-        try {
-            let result = (await SupabaseService.getGyms()).gym;
-            const gymsResult = result?.map((item: { [x: string]: any }) => {
-                const {id, name, grades} = item;
-                return {id, name, grades} as Gym;
-            });
-            if (gymsResult) gyms = gymsResult;
-            return gyms;
-        } catch (err: any) {
-            console.log(err);
-        }
     }
 
     /**
@@ -65,10 +49,6 @@
     function closeDialog() {
         document.getElementById("event-dialog")?.classList.add("hidden");
     }
-
-    onMount(async () => {
-        await fetchGyms();
-    });
 </script>
 
 <div
@@ -149,9 +129,11 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                         >
                                             <option selected>Bitte auswählen...</option>
-                                            {#each gyms as gym}
-                                                <option value={gym.name}>{gym.name}</option>
-                                            {/each}
+                                            {#if $gyms}
+                                                {#each $gyms as gym}
+                                                    <option value={gym.name}>{gym.name}</option>
+                                                {/each}
+                                            {/if}
                                         </select>
                                     </div>
                                 </div>

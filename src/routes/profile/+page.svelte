@@ -8,29 +8,9 @@
     import NotLoggedIn from "$lib/ui/NotLoggedIn.svelte";
     import type {User} from "../../types/User";
     import {onMount} from "svelte";
-    import {userImage} from "../../store";
+    import {getSummedPoints, userImage, userPoints, isLoggedIn} from "../../store";
 
     let user: User;
-    let userPoints: number;
-    let avatar: any;
-    let loggedIn: boolean = false;
-
-    /**
-     * sum up all points of current user
-     * @returns
-     */
-    async function getSummedPoints(): Promise<number> {
-        let summedPoints: number = 0;
-        const pointsArray = (await SupabaseService.getCurrentPoints())?.points?.points;
-        if (pointsArray !== null) {
-            pointsArray.map((item: any) => {
-                summedPoints += item.value;
-            });
-        } else {
-            summedPoints = 0;
-        }
-        return summedPoints;
-    }
 
     /**
      * update avatar
@@ -46,7 +26,6 @@
         // Cache.removeCacheItem("userImage");
         await SupabaseService.updateAvatar(file);
         await DataProvider.updateAvatarUrlInCache();
-        avatar = JSON.parse($userImage);
         closeDialog();
     }
 
@@ -65,12 +44,8 @@
     }
 
     onMount(async () => {
-        if (await Session.isLoggedIn()) {
-            loggedIn = true;
-        }
         user = await Session.getCurrentUser();
-        avatar = JSON.parse($userImage);
-        userPoints = await getSummedPoints();
+        if ($userPoints === 0) userPoints.set(await getSummedPoints());
     });
 
 
@@ -79,11 +54,11 @@
 <main class="text-center mx-auto text-gray-700">
     <Header headerText="Profil"/>
 
-    {#if loggedIn}
+    {#if $isLoggedIn}
         {#if user}
             <div
                     class="userImage mx-auto w-20 h-20 mt-4 cursor-pointer border-secondary border-2 hover:opacity-80"
-                    style={`background-image: url(${avatar})`}
+                    style={`background-image: url(${$userImage})`}
                     on:click={openDialog}
             />
 
@@ -147,8 +122,8 @@
 
             <div class="card card-compact shadow-xl mx-auto max-w-sm bg-custom-green text-white">
                 <div class="card-body">
-                    {#if userPoints >= 0}
-                        <h2 class="card-title mx-auto">{userPoints}</h2>
+                    {#if $userPoints >= 0}
+                        <h2 class="card-title mx-auto">{$userPoints}</h2>
                     {:else}
                         <LoadingSpinner/>
                     {/if}

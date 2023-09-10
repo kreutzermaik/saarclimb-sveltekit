@@ -5,57 +5,23 @@
     import type {Point} from "../../types/Point";
     import type {Gym} from "../../types/Gym";
     import type {User} from "../../types/User";
-    import Session from "../../session";
-    import Cache from "../../cache";
     import {onMount, onDestroy} from "svelte";
     import type {RealtimeChannel} from "@supabase/supabase-js";
+    import {isLoggedIn, currentGym, gyms} from "../../store";
 
     let subscription: RealtimeChannel;
 
     $: users = [];
     let sortedUsers: User[] = [];
-    let gyms: Gym[] = [];
-    let usersGym: any;
-    let currentGym: Gym;
     let selectedGym: any;
 
     /**
      * fetch all users
      */
-async function fetchAllUsers() {
+    async function fetchAllUsers() {
         try {
             let result = (await SupabaseService.getAllUsers()).users;
             users = result as User[];
-        } catch (err: any) {
-            console.log(err);
-        }
-    }
-
-    /**
-     * fetch gym for current user
-     * @returns
-     */
-    async function fetchUsersCurrentGym(): Promise<any> {
-        try {
-            return usersGym = (await SupabaseService.getCurrentGym()).gym;
-        } catch (err: any) {
-            console.log(err);
-        }
-    }
-
-    /**
-     * fetch all gyms
-     * @returns
-     */
-    async function fetchGyms(): Promise<Gym[] | undefined> {
-        try {
-            let result = (await SupabaseService.getGyms()).gym;
-            const gymsResult = result?.map((item: { [x: string]: any }) => {
-                const {id, name, grades} = item;
-                return {id, name, grades} as Gym;
-            });
-            gyms = result as Gym[];
-            return gymsResult;
         } catch (err: any) {
             console.log(err);
         }
@@ -67,17 +33,17 @@ async function fetchAllUsers() {
      */
     function sortUsers() {
         let currentGymObj: Gym;
-        if (Cache.getCacheItem("currentGym")) {
-            currentGymObj = JSON.parse(Cache.getCacheItem("currentGym"));
+        if ($currentGym) {
+            currentGymObj = $currentGym;
         } else {
-            currentGymObj = currentGym;
+            currentGymObj = $currentGym;
         }
 
         const usersWithPoints = users.filter(
             (user: User) => user.points !== null
         );
 
-        if (currentGym) {
+        if ($currentGym) {
             const filteredUsers = usersWithPoints.map((user: User) => {
                 let points: Point[];
 
@@ -121,8 +87,7 @@ async function fetchAllUsers() {
         selectedGym = gym;
         const {id, logo, grades} = (await SupabaseService.getGymByName(gym)).gym;
         await SupabaseService.updateUserGym(id);
-        currentGym = {id: id, name: gym, logo: logo, grades: grades};
-        Cache.setCacheItem("currentGym", currentGym);
+        currentGym.set({id: id, name: gym, logo: logo, grades: grades});
         await fetchAllUsers();
         sortUsers();
     }
@@ -156,19 +121,17 @@ async function fetchAllUsers() {
         subscription.subscribe();
 
         await fetchAllUsers();
-        await fetchGyms();
 
-        if (await Session.isLoggedIn()) {
-            let currentGymId: number = 0;
+        if ($isLoggedIn) {
+            let current_gym_id: number = 0;
             let currentGymName: string = "";
 
-            if (Cache.getCacheItem("currentGym")) {
-                currentGymId = JSON.parse(Cache.getCacheItem("currentGym")).id;
-                currentGymName = JSON.parse(Cache.getCacheItem("currentGym")).name;
+            if ($currentGym) {
+                current_gym_id = $currentGym.id;
+                currentGymName = $currentGym.name;
             } else {
-                currentGymId = (await fetchUsersCurrentGym()).gym;
-                if (currentGymId) {
-                    currentGymName = (await SupabaseService.getGymNameById(currentGymId))?.gym.name;
+                if (current_gym_id) {
+                    currentGymName = (await SupabaseService.getGymNameById(current_gym_id))?.gym.name;
                 }
             }
 
@@ -176,7 +139,7 @@ async function fetchAllUsers() {
                 await SupabaseService.getGymByName(currentGymName)
             ).gym;
 
-            currentGym = {id: id, name: name, logo: logo, grades: grades};
+            currentGym.set({id: id, name: name, logo: logo, grades: grades});
         }
         sortUsers();
     });
@@ -194,20 +157,27 @@ async function fetchAllUsers() {
 <select
         id="gyms"
         on:change={e => changeGym(e.target.value)}
-        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2 m-1.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
 >
     <option selected>
-        {#if Cache.getCacheItem("currentGym")}
-            {JSON.parse(Cache.getCacheItem("currentGym")).name}
-        {:else if currentGym}
-            {currentGym.name}
+        {#if $currentGym}
+            {$currentGym.name}
+        {:else if $currentGym}
+            {$currentGym.name}
         {:else}
-            Halle auswählen...
+            Bitte auswählen...
         {/if}
     </option>
-    {#each gyms as gym}
-        <option value={gym.name}>{gym.name}</option>
-    {/each}
+    {#if $gyms}
+        {#each $gyms as gym}
+            {#if $currentGym && gym.name !== $currentGym.name}
+                <option value={gym.name}>{gym.name}</option>
+            {:else if $currentGym && gym.name !== $currentGym.name}
+                <option value={gym.name}>{gym.name}</option>
+                {$currentGym.name}
+            {/if}
+        {/each}
+    {/if}
 </select>
 
 {#if users}

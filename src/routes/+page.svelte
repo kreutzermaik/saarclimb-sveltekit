@@ -2,28 +2,13 @@
   import Calendar from "$lib/features/Calendar.svelte";
   import PlanerCompact from "$lib/features/PlanerCompact.svelte";
   import NotLoggedIn from "$lib/ui/NotLoggedIn.svelte";
-  import SupabaseService from "../api/supabase-service";
   import Header from "../lib/features/Header.svelte";
-  import Session from "../session";
   import DataProvider from "../data-provider";
   import {onMount} from "svelte";
-
-  let isLoggedIn: boolean = false;
-
-  /**
-   * initialize isLoggedIn variable
-   */
-  async function initLoggedIn() {
-    try {
-      isLoggedIn = await Session.isLoggedIn();
-    } catch (err: any) {
-      console.log(err);
-    }
-  }
+  import {isLoggedIn} from "../store";
 
   onMount(async () => {
-    await initLoggedIn();
-    if (isLoggedIn) {
+    if ($isLoggedIn) {
       await DataProvider.initUserData();
     }
   })
@@ -31,7 +16,7 @@
 
 <div>
   <Header headerText="Dashboard" />
-  {#if isLoggedIn}
+  {#if $isLoggedIn}
     <PlanerCompact />
     <br>
     <div class="card card-compact shadow-xl bg-white">

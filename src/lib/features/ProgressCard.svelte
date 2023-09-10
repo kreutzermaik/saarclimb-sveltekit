@@ -3,17 +3,15 @@
     import type {Gym} from "../../types/Gym";
     import type {Progress} from "../../types/Progress";
     import type {ProgressItem} from "../../types/ProgressItem";
-    import Cache from "../../cache";
     import Notification from "$lib/ui/Notification";
     import Button from "$lib/ui/Button.svelte";
     import {onDestroy, onMount} from "svelte";
     import type {RealtimeChannel} from "@supabase/supabase-js";
+    import {currentGymId, currentGym, gyms} from "../../store";
 
     let subscription: RealtimeChannel;
 
-    let gyms: Gym[] = [];
     let usersGym: any;
-    let currentGym: Gym;
     let selectedGym: any;
     let progress: Progress[] = [];
     let color: string = '';
@@ -27,24 +25,6 @@
             let result = (await SupabaseService.getCurrentGym()).gym;
             usersGym = result;
             return result;
-        } catch (err: any) {
-            console.log(err);
-        }
-    }
-
-    /**
-     * fetch all gyms
-     * @returns
-     */
-    async function fetchGyms(): Promise<Gym[] | undefined> {
-        try {
-            let result = (await SupabaseService.getGyms()).gym;
-            const gymsResult = result?.map((item: { [x: string]: any }) => {
-                const {id, name, grades} = item;
-                return {id, name, grades} as Gym;
-            });
-            gyms = result as Gym[];
-            return gymsResult;
         } catch (err: any) {
             console.log(err);
         }
@@ -73,13 +53,12 @@
         const gym = e.target.value;
         selectedGym = gym;
         const {id, logo, grades} = (await SupabaseService.getGymByName(gym)).gym;
-        usersGym = await fetchUsersCurrentGym();
-        if (usersGym !== undefined && usersGym.gym !== null) {
+        currentGymId.set(await fetchUsersCurrentGym());
+        if ($currentGymId !== undefined && $currentGymId !== null) {
             await SupabaseService.updateUserGym(id);
         }
-        currentGym = {id: id, name: gym, logo: logo, grades: grades};
+        currentGym.set({id: id, name: gym, logo: logo, grades: grades});
         await fetchProgress(id);
-        Cache.setCacheItem("currentGym", currentGym);
     }
 
     /**
@@ -91,10 +70,10 @@
         grades.map((item: ProgressItem) => {
             array.push({grade: item, value: 0});
         });
-        await SupabaseService.insertProgress(array, currentGym.id);
-        await fetchProgress(currentGym.id);
+        await SupabaseService.insertProgress(array, $currentGym.id);
+        await fetchProgress($currentGym.id);
         Notification.show(Notification.GYM_VALUES_ADDED_MESSAGE);
-        await fetchProgress(currentGym.id);
+        await fetchProgress($currentGym.id);
     }
 
     /**
@@ -104,21 +83,21 @@
      */
     async function updateProgress(value: number, grade: string) {
         progress.map((item: Progress) => {
-            if (item.gymid === currentGym.id) {
+            if (item.gymid === $currentGym.id) {
                 item.progress.find((item: ProgressItem) => item.grade === grade).value = value;
             }
         });
 
         await SupabaseService.updateProgress(
-            progress.find((item: Progress) => item.gymid === currentGym.id)
+            progress.find((item: Progress) => item.gymid === $currentGym.id)
                 .progress,
-            currentGym.id
+            $currentGym.id
         );
 
         let currentUserPointsArray = await SupabaseService.getCurrentPoints();
         currentUserPointsArray.points?.points.map((item: any) => {
-            if (Cache.getCacheItem("currentGym")) {
-                if (Number(item.gymId) === JSON.parse(Cache.getCacheItem("currentGym")).id) {
+            if ($currentGym) {
+                if (Number(item.gymId) === $currentGym.id) {
                     item.value = calculatePoints();
                 }
             }
@@ -216,7 +195,7 @@
      * on subscription update
      */
     async function onUpdate() {
-        await fetchProgress(currentGym.id);
+        await fetchProgress($currentGym.id);
     }
 
     onMount(async () => {
@@ -228,14 +207,12 @@
         );
         subscription.subscribe();
 
-        await fetchGyms();
-
         let currentGymId: number = 0;
         let currentGymName: string = "";
 
-        if (Cache.getCacheItem("currentGym")) {
-            currentGymId = JSON.parse(Cache.getCacheItem("currentGym")).id;
-            currentGymName = JSON.parse(Cache.getCacheItem("currentGym")).name;
+        if ($currentGym) {
+            currentGymId = $currentGym.id;
+            currentGymName = $currentGym.name;
         } else {
             currentGymId = (await fetchUsersCurrentGym())?.gym;
             if (currentGymId) {
@@ -247,9 +224,8 @@
             await SupabaseService.getGymByName(currentGymName)
         ).gym;
 
-        currentGym = {id: id, name: name, logo: logo, grades: grades};
+        currentGym.set({id: id, name: name, logo: logo, grades: grades});
         await fetchProgress(currentGymId);
-        Cache.setCacheItem("currentGym", currentGym);
     });
 
     onDestroy(() => {
@@ -271,22 +247,24 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
             <option selected>
-                {#if Cache.getCacheItem("currentGym")}
-                    {JSON.parse(Cache.getCacheItem("currentGym")).name}
-                {:else if currentGym}
-                    {currentGym.name}
+                {#if $currentGym}
+                    {$currentGym.name}
+                {:else if $currentGym}
+                    {$currentGym.name}
                 {:else}
                     Bitte auswählen...
                 {/if}
             </option>
-            {#each gyms as gym}
-                {#if Cache.getCacheItem("currentGym") && gym.name !== JSON.parse(Cache.getCacheItem("currentGym")).name}
-                    <option value={gym.name}>{gym.name}</option>
-                {:else if currentGym && gym.name !== currentGym.name}
-                    <option value={gym.name}>{gym.name}</option>
-                    {currentGym.name}
-                {/if}
-            {/each}
+            {#if $gyms}
+                {#each $gyms as gym}
+                    {#if $currentGym && gym.name !== $currentGym.name}
+                        <option value={gym.name}>{gym.name}</option>
+                    {:else if $currentGym && gym.name !== $currentGym.name}
+                        <option value={gym.name}>{gym.name}</option>
+                        {$currentGym.name}
+                    {/if}
+                {/each}
+            {/if}
         </select>
 
         <br/>
@@ -350,7 +328,7 @@
             <Button
                     text="Starte mit dieser Boulderhalle!"
                     type="secondary"
-                    onClick={() => initProgressDataForGym(currentGym.grades)}
+                    onClick={() => initProgressDataForGym($currentGym.grades)}
             />
         {/if}
     </div>
