@@ -2,7 +2,6 @@
     import Header from "$lib/features/Header.svelte";
     import SupabaseService from "../../api/supabase-service";
     import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
-    import Cache from "../../cache";
     import Session from "../../session";
     import DataProvider from "../../data-provider";
     import Button from "$lib/ui/Button.svelte";
