@@ -5,11 +5,17 @@ import Session from "./session";
 import type {Gym} from "./types/Gym";
 
 export const userImage: Writable<string> = writable("");
-export const userPoints: Writable<number> = writable(await getSummedPoints());
-export const isLoggedIn: Writable<boolean> = writable(await Session.isLoggedIn());
-export const currentGymId: Writable<Gym> = writable(await fetchUsersCurrentGym());
+export const userPoints: Writable<Promise<number>> = writable(getSummedPoints());
+export const isLoggedIn: Writable<boolean> = writable();
+Session.isLoggedIn().then((value) => {
+    isLoggedIn.set(value);
+});
+export const currentGymId: Writable<Promise<any>> = writable(fetchUsersCurrentGym());
 export const currentGym: Writable<Gym> = writable<Gym>();
-export const gyms: Writable<Gym[]> = writable<Gym[]>(await fetchGyms());
+export const gyms: Writable<Gym[] | undefined> = writable<Gym[]>();
+fetchGyms().then((value) => {
+    gyms.set(value);
+});
 
 /**
  * sum up all points of current user

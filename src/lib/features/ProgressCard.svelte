@@ -54,7 +54,7 @@
         selectedGym = gym;
         const {id, logo, grades} = (await SupabaseService.getGymByName(gym)).gym;
         currentGymId.set(await fetchUsersCurrentGym());
-        if ($currentGymId !== undefined && $currentGymId !== null) {
+        if (await $currentGymId !== undefined && await $currentGymId !== null) {
             await SupabaseService.updateUserGym(id);
         }
         currentGym.set({id: id, name: gym, logo: logo, grades: grades});

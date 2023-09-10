@@ -50,8 +50,10 @@
 
     onMount(async () => {
         user = await Session.getCurrentUser();
-        console.log(user);
-        if ($userPoints === 0) userPoints.set(await getSummedPoints());
+        if (await $userPoints === 0) userPoints.set(await getSummedPoints());
+        $userPoints.then(value => {
+            userPoints.set(value);
+        })
     });
 
 
