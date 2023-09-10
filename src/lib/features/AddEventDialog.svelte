@@ -37,6 +37,7 @@
             };
             await SupabaseService.addEvent(newEvent);
             closeDialog();
+            event = "";
             Notification.show(Notification.EVENT_ADDED_MESSAGE);
         } catch (err: any) {
             Notification.show(Notification.EVENT_ADDED_ERROR_MESSAGE, err.message, "error", 5000);
@@ -108,6 +109,7 @@
                                             Trainingseinheit
                                         </label>
                                         <input
+                                                bind:value={event}
                                                 name="event"
                                                 id="event"
                                                 type="text"
