@@ -9,6 +9,7 @@
     import NotLoggedIn from "$lib/ui/NotLoggedIn.svelte";
     import type {User} from "../../types/User";
     import {onMount} from "svelte";
+    import {userImage} from "../../store";
 
     let user: User;
     let userPoints: number;
@@ -43,10 +44,10 @@
             file = e.target.files[0];
         }
 
-        Cache.removeCacheItem("userImage");
+        // Cache.removeCacheItem("userImage");
         await SupabaseService.updateAvatar(file);
         await DataProvider.updateAvatarUrlInCache();
-        avatar = JSON.parse(Cache.getCacheItem("userImage"));
+        avatar = JSON.parse($userImage);
         closeDialog();
     }
 
@@ -69,7 +70,7 @@
             loggedIn = true;
         }
         user = await Session.getCurrentUser();
-        avatar = JSON.parse(Cache.getCacheItem("userImage"));
+        avatar = JSON.parse($userImage);
         userPoints = await getSummedPoints();
     });
 

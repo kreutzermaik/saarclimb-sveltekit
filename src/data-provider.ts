@@ -3,6 +3,7 @@ import Cache from "./cache";
 import Session from "./session";
 import type {Gym} from "./types/Gym";
 import type {User} from "./types/User";
+import {userImage} from "./store";
 
 export default class DataProvider {
     /**
@@ -24,8 +25,10 @@ export default class DataProvider {
      */
     static async updateAvatarUrlInCache(): Promise<void> {
         let url = (await SupabaseService.getAvatar()).data?.signedUrl;
-        Cache.setCacheItem("userImage", url);
-        if (url) await this.updateUserWithAvatarUrl(url);
+        if (url) {
+            userImage.set(url);
+            await this.updateUserWithAvatarUrl(url);
+        }
     }
 
     /**
