@@ -1,0 +1,20 @@
+name: Collectl Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Install Collectl
+        run: sudo apt-get install collectl
+
+      - name: Verify Collectl
+        run: collectl -v

@@ -1,0 +1,43 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      PROJECT_ID: tqgufceactcswwkbjfjk
+      SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - uses: supabase/setup-cli@v1
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Debug
+        run: |
+          echo "SUPABASE_URL=$SUPABASE_URL"
+          echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY"
+
+      - name: Set Environment Variables
+        run: |
+          echo "VITE_SUPABASE_URL=$SUPABASE_URL" >> $GITHUB_ENV
+          echo "VITE_SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> $GITHUB_ENV
+
+      - name: Run Tests
+        run: npm run ci:cy-run
