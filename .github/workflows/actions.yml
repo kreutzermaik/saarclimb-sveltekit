@@ -29,7 +29,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y collectl
 
       - name: Starten von collectl im Hintergrund
-        run: collectl -f /var/log/collectl/collectl -scmdn -P --sep ',' &
+        run: collectl -f collectl.csv -scmdn -P --sep ',' &
 
       - name: Warten auf die Bereitschaft von collectl
         run: sleep 10
@@ -40,11 +40,8 @@ jobs:
       - name: Stoppen von collectl
         run: sudo killall collectl
 
-      - name: Checken der collectl-Logs
-        run: ls /var/log/collectl
-
       - name: Speichern von collectl-Logs als Artefakte
         uses: actions/upload-artifact@v3
         with:
           name: collectl-logs
-          path: /var/log/collectl
+          path: collectl.csv
