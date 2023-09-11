@@ -22,10 +22,28 @@ jobs:
         with:
           node-version: '18'
 
-      - uses: supabase/setup-cli@v1
-
       - name: Install Dependencies
         run: npm install
 
+      - name: Install Collectl
+        run: sudo apt-get update && sudo apt-get install -y collectl
+
+      - name: Starten von collectl
+        run: collectl -scd
+
       - name: Run Tests
         run: npm run ci:cy-run
+
+      - name: Stoppen von collectl
+        run: sudo killall collectl
+
+      - name: Speichern von collectl-Logs als Artefakte
+        uses: actions/upload-artifact@v3
+        with:
+          name: collectl-logs
+          path: /var/log/collectl
+
+      - name: Download a single artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: collectl-logs
