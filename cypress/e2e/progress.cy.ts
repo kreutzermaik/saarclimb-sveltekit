@@ -14,16 +14,16 @@ describe('progress spec', () => {
         cy.get('#password-field').should('be.visible').type('test123');
         cy.wait(1000);
         cy.get('#login button').should('be.visible').click();
-        cy.wait(2000);
+        cy.wait(3000);
 
         /**
          * Progress
          */
         cy.visit('/progress');
-        cy.wait(2000);
+        cy.wait(5000);
         // select gym
         cy.get('#gyms').select('Boulder Olymp');
-        cy.wait(2000);
+        cy.wait(5000);
         cy.get('.minus-button').click({multiple: true});
         cy.wait(1000);
         cy.get('.minus-button').click({multiple: true});
@@ -40,7 +40,7 @@ describe('progress spec', () => {
         cy.wait(2000);
         // switch gym
         cy.get('#gyms').select('Rocklands');
-        cy.wait(2000);
+        cy.wait(5000);
         cy.get('.minus-button').click({multiple: true});
         cy.wait(1000);
         cy.get('.minus-button').click({multiple: true});
