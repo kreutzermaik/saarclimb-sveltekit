@@ -45,8 +45,3 @@ jobs:
         with:
           name: collectl-logs
           path: /var/log/collectl
-
-      - name: Download a single artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: collectl-logs
