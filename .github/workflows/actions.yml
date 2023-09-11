@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      VITE_SUPABASE_URL: https://tqgufceactcswwkbjfjk.supabase.co
-      VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRxZ3VmY2VhY3Rjc3d3a2JqZmprIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NzA2OTMyOTksImV4cCI6MTk4NjI2OTI5OX0.MRYORIJPYAwuRfISOKKsKqCnfABJqLaXT1cZQZ6ZAE4
+      VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
 
