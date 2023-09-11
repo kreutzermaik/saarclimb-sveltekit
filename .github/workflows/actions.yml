@@ -29,7 +29,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y collectl
 
       - name: Vergabe von Berechtigungen für collectl
-        run: chmod +w /var/log/collectl
+        run: sudo chmod +w /var/log/collectl
 
       - name: Starten von collectl im Hintergrund
         run: collectl -s cdmn -i1 -P --sep 59 -f /var/log/collectl/performance_Messung.csv &
