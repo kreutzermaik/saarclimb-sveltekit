@@ -150,7 +150,9 @@
      * 2) navigation to another page
      */
     onDestroy(() => {
-        subscription.unsubscribe();
+        if (subscription) {
+            subscription.unsubscribe();
+        }
     });
 </script>
 
@@ -175,6 +177,8 @@
             {:else if $currentGym && gym.name !== $currentGym.name}
                 <option value={gym.name}>{gym.name}</option>
                 {$currentGym.name}
+            {:else if !$isLoggedIn}
+                <option value={gym.name}>{gym.name}</option>
             {/if}
         {/each}
     {/if}

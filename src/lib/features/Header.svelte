@@ -21,10 +21,9 @@
     <div class="p-4 rounded-lg flex justify-between">
         {#if $isLoggedIn}
             <button on:click={() => goto("/profile")}>
-                <div
-                        class="userImage w-6 h-6"
-                        style={`background-image: url(${avatar})`}
-                />
+                {#if avatar !== undefined}
+                    <div class="userImage w-6 h-6" style={`background-image: url(${avatar})`} />
+                {/if}
             </button>
         {/if}
 

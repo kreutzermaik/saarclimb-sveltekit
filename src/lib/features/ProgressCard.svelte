@@ -229,7 +229,9 @@
     });
 
     onDestroy(() => {
-        subscription.unsubscribe();
+        if (subscription) {
+            subscription.unsubscribe();
+        }
     });
 
 </script>
