@@ -44,7 +44,10 @@ jobs:
         run: ls /var/log/collectl/
 
       - name: Log-Datei entpacken und verschieben
-        run: sudo gzip -d /var/log/collectl/performance_Messung.csv*.gz* && sudo cp performance_Messung.csv*.tab* /var/log/collectl/performance_Messung.csv
+        run: sudo gzip -d /var/log/collectl/performance_Messung.csv*.gz*
+
+      - name: Log-Datei in CSV-Format exportieren
+        run: sudo cp performance_Messung.csv*.tab* /var/log/collectl/performance_Messung.csv
 
       - name: Speichern von collectl-Logs als Artefakte
         uses: actions/upload-artifact@v3
