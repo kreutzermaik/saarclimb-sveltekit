@@ -40,9 +40,6 @@ jobs:
       - name: Stoppen von collectl
         run: sudo killall collectl
 
-      - name: collectl logs extrahieren
-        run: gunzip /var/log/collectl/collectl*.gz*
-
       - name: Speichern von collectl-Logs als Artefakte
         uses: actions/upload-artifact@v3
         with:
