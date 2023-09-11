@@ -1,5 +1,7 @@
 # SaarClimb - SvelteKit
 
+[![CI/CD Pipeline](https://github.com/kreutzermaik/saarclimb-sveltekit/actions/workflows/actions.yml/badge.svg)](https://github.com/kreutzermaik/saarclimb-sveltekit/actions/workflows/actions.yml)
+
 > 🌐 PWA: [https://sveltekit-saarclimb.netlify.app/](https://sveltekit-saarclimb.netlify.app/)
 >
 > 👷‍♀️In dieser README wird die Architektur des Projektes erklärt

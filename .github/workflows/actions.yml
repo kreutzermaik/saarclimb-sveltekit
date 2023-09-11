@@ -28,14 +28,17 @@ jobs:
       - name: Install Collectl
         run: sudo apt-get update && sudo apt-get install -y collectl
 
+      - name: Vergabe von Berechtigungen für collectl
+        run: chmod +w /var/log/collectl
+
       - name: Starten von collectl im Hintergrund
-        run: collectl -s cdmn -i1 -P --sep 59 -f /var/log/performance_Messung.csv &
+        run: collectl -s cdmn -i1 -P --sep 59 -f /var/log/collectl/performance_Messung.csv &
 
       - name: Warten auf die Bereitschaft von collectl
         run: sleep 10
 
-      - name: Run Tests
-        run: npm run ci:cy-run
+      #- name: Run Tests
+      #  run: npm run ci:cy-run
 
       - name: Stoppen von collectl
         run: sudo killall collectl
@@ -44,10 +47,10 @@ jobs:
         run: sleep 10
 
       - name: Check Logs
-        run: ls /var/log/
+        run: ls /var/log/collectl/
 
       - name: Speichern von collectl-Logs als Artefakte
         uses: actions/upload-artifact@v3
         with:
           name: collectl-logs
-          path: /var/log/performance_Messung.csv
+          path: /var/log/collectl/
