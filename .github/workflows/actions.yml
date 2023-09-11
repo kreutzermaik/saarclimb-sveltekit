@@ -29,7 +29,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y collectl
 
       - name: Starten von collectl im Hintergrund
-        run: sudo collectl -s cdmn -i1 -P --sep 59 -f /var/log/collectl/performance_Messung.csv &
+        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_Messung.csv &
 
       - name: Warten auf die Bereitschaft von collectl
         run: sleep 10
