@@ -40,6 +40,9 @@ jobs:
       - name: Stoppen von collectl
         run: sudo killall collectl
 
+      - name: Checken der collectl-Logs
+        run: ls /var/log/collectl
+
       - name: Speichern von collectl-Logs als Artefakte
         uses: actions/upload-artifact@v3
         with:
