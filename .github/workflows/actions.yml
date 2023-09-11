@@ -32,7 +32,7 @@ jobs:
         run: sudo chmod +w /var/log/collectl
 
       - name: Starten von collectl im Hintergrund
-        run: collectl -s cdmn -i1 -P --sep 59 -f /var/log/collectl/performance_Messung.csv &
+        run: sudo collectl -s cdmn -i1 -P --sep 59 -f /var/log/collectl/performance_Messung.csv &
 
       - name: Warten auf die Bereitschaft von collectl
         run: sleep 10
