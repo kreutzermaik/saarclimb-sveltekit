@@ -127,6 +127,16 @@ export default class SupabaseService {
             .eq("userid", await Session.getCurrentUserId());
     }
 
+    public static async removeEvent(event: Event): Promise<void> {
+        await supabase
+            .from("events")
+            .delete()
+            .eq("userid", await Session.getCurrentUserId())
+            .eq("title", event.title)
+            .eq("location", event.location)
+            .eq("date", event.date);
+    }
+
     public static async getEvents() {
         const {data: events, error} = await supabase
             .from("events")
@@ -200,8 +210,9 @@ export default class SupabaseService {
      * @param channel
      * @param onInsert
      * @param onUpdate
+     * @param onDelete
      */
-    public static subscribeToTable(table: string, channel: string, onInsert?: any, onUpdate?: any): RealtimeChannel {
+    public static subscribeToTable(table: string, channel: string, onInsert?: any, onUpdate?: any, onDelete?: any): RealtimeChannel {
         return supabase
             .channel(channel)
             .on(
@@ -218,6 +229,9 @@ export default class SupabaseService {
                             break;
                         case "UPDATE":
                             onUpdate();
+                            break;
+                        case "DELETE":
+                            onDelete(payload);
                             break;
                     }
                 }

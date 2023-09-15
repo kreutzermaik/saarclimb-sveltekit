@@ -86,6 +86,11 @@
     events = await fetchEvents();
   }
 
+  function onDelete(payload: any) {
+    events = events.filter((item: any) => item.id !== payload.old.id);
+    if (events) createCalendar();
+  }
+
   /**
    * subscribe to events table on mount
    */
@@ -94,7 +99,8 @@
       "events",
       "event-channel",
       onInsert,
-      onUpdate
+      onUpdate,
+      onDelete
     );
     subscription.subscribe();
 

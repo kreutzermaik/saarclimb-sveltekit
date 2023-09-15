@@ -10,6 +10,8 @@
     import CheckIcon from "$lib/ui/icons/CheckIcon.svelte";
     import UnusedIcon from "$lib/ui/icons/UnusedIcon.svelte";
     import type {RealtimeChannel} from "@supabase/supabase-js";
+    import type {Event} from "../../types/Event";
+    import Session from "../../session";
 
     let plan: Plan[] = [];
     let subscription: RealtimeChannel;
@@ -28,11 +30,55 @@
 
     /**
      * update ui and supabase plans
+     * @param item
+     */
+    function updatePlan(item: Plan) {
+        item.checked = !item.checked;
+        SupabaseService.updatePlan(plan);
+        updateCalendar(item);
+    }
+
+    /**
+     * update calendar with finished training session
+     * @param item
+     */
+    async function updateCalendar(item: Plan) {
+        let event = item.value;
+        let date = getClickedDay(item.day);
+        let newEvent: Event = {
+            title: event,
+            date: date,
+            userid: await Session.getCurrentUserId(),
+            location: '',
+        };
+        if (item.checked) await SupabaseService.addEvent(newEvent);
+        else await SupabaseService.removeEvent(newEvent);
+    }
+
+    /**
+     * get exact day of the week that was clicked in planer checkbox
      * @param day
      */
-    function updatePlan(day: Plan) {
-        day.checked = !day.checked;
-        SupabaseService.updatePlan(plan);
+    function getClickedDay(day: string) {
+        const today = new Date();
+        const dayIndex = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'].indexOf(day);
+        const difference = dayIndex - today.getDay() + 1;
+        today.setDate(today.getDate() + difference);
+        return formatDate(today);
+    }
+
+    /**
+     *
+     * @param date
+     */
+    function formatDate(date: Date) {
+        const d = new Date(date);
+        let month = '' + (d.getMonth() + 1);
+        let day = '' + d.getDate();
+        const year = d.getFullYear();
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+        return [year, month, day].join('-');
     }
 
     /**
