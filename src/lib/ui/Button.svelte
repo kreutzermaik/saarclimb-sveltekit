@@ -7,6 +7,7 @@
   export let opacity: string = "undefined";
   export let textSize: string = "undefined";
   export let paddingX: string = "undefined";
+  export let disabled: boolean = false;
   export let onClick: Function = () => {};
 
   function handleClick() {
@@ -17,6 +18,7 @@
 <button
   on:click={handleClick}
   type="button"
+  disabled={disabled === true}
   class={`bg-${type} ${width} ${opacity} ${paddingX} ${
     textSize
   } ${(outline === "true") ? "btn-outline border" : ""} ${

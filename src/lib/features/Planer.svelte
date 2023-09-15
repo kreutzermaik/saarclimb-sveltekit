@@ -5,7 +5,7 @@
   import {onDestroy, onMount} from "svelte";
   import Cache from "../../cache";
   import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
-  import ResetIcon from "$lib/ui/icons/ResetIcon.svelte";
+  import ResetIcon from "$lib/ui/icons/TrashIcon.svelte";
   import Button from "$lib/ui/Button.svelte";
   import InfoIcon from "$lib/ui/icons/InfoIcon.svelte";
   import type {RealtimeChannel} from "@supabase/supabase-js";

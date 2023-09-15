@@ -45,6 +45,10 @@ nav {
   margin-bottom: 5%;
 }
 
+button:disabled {
+  opacity: 50%;
+}
+
 
 @media screen and (max-width: 640px) {
   .board-table {

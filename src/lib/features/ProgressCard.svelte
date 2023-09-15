@@ -291,6 +291,7 @@
                                             opacity="opacity-80"
                                             textSize="text-lg"
                                             paddingX="px-3.5"
+                                            disabled="{progressItem.value <= 0}"
                                             onClick={() => decrementValue(progressItem)}
                                     />
                                 </span>

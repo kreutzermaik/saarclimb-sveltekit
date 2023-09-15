@@ -37,6 +37,9 @@ jobs:
       - name: Run Tests
         run: npm run ci:cy-run
 
+      - name: Cooldown
+        run: sleep 10
+
       - name: Stoppen von collectl
         run: sudo killall collectl
 
