@@ -15,7 +15,7 @@ module.exports = {
       'custom-turquiose': 'lightseagreen',
       'custom-gold': '#FFD700',
       'custom-silver': '#C0C0C0',
-      'custom-bronze': '#CD7F32',
+      'custom-bronze': '#CD7F32'
     },
   },
   daisyui: {

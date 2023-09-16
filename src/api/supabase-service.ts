@@ -145,6 +145,15 @@ export default class SupabaseService {
         return {events, error};
     }
 
+    public static async getEventsByLocation(location: string) {
+        const {data: events, error} = await supabase
+            .from("events")
+            .select("*")
+            .eq("userid", await Session.getCurrentUserId())
+            .eq("location", location);
+        return {events, error};
+    }
+
     public static async getGyms() {
         const {data: gym, error} = await supabase.from("gym").select("*");
         return {gym, error};
