@@ -12,9 +12,14 @@
     import type {RealtimeChannel} from "@supabase/supabase-js";
     import type {Event} from "../../types/Event";
     import Session from "../../session";
+    import AddEventDialog from "$lib/features/AddEventDialog.svelte";
+    import {gyms} from "../../store";
+    import Button from "$lib/ui/Button.svelte";
+    import AskLocationDialog from "$lib/features/AskLocationDialog.svelte";
 
     let plan: Plan[] = [];
     let subscription: RealtimeChannel;
+    let newEvent: Event;
 
     /**
      * fetch data from SupabaseService
@@ -33,9 +38,9 @@
      * @param item
      */
     function updatePlan(item: Plan) {
+        updateCalendar(item);
         item.checked = !item.checked;
         SupabaseService.updatePlan(plan);
-        updateCalendar(item);
     }
 
     /**
@@ -45,14 +50,19 @@
     async function updateCalendar(item: Plan) {
         let event = item.value;
         let date = getClickedDay(item.day);
-        let newEvent: Event = {
+        newEvent = {
             title: event,
             date: date,
             userid: await Session.getCurrentUserId(),
             location: '',
         };
-        if (item.checked) await SupabaseService.addEvent(newEvent);
-        else await SupabaseService.removeEvent(newEvent);
+        // open AskLocationDialog if event is a climbing event
+        if (event.match("Kletter") || event.match("Boulder") || event.match("Climb")) {
+            if (item.checked) openDialog();
+        } else {
+            if (item.checked) await SupabaseService.addEvent(newEvent);
+            else await SupabaseService.removeEvent(newEvent);
+        }
     }
 
     /**
@@ -79,6 +89,13 @@
         if (month.length < 2) month = '0' + month;
         if (day.length < 2) day = '0' + day;
         return [year, month, day].join('-');
+    }
+
+    /**
+     * open dialog for adding a new event
+     */
+    function openDialog() {
+        document.getElementById("ask-location-dialog")?.classList.remove("hidden");
     }
 
     /**
@@ -198,7 +215,8 @@
                                         </div>
                                     </button>
                                 {:else if !item.checked}
-                                    <div class={`tooltip ${item.day === "Montag" ? 'tooltip-right' : item.day === "Sonntag" ? 'tooltip-left' : 'tooltip-bottom'} tooltip-primary mb-4`} data-tip="Kein Workout geplant">
+                                    <div class={`tooltip ${item.day === "Montag" ? 'tooltip-right' : item.day === "Sonntag" ? 'tooltip-left' : 'tooltip-bottom'} tooltip-primary mb-4`}
+                                         data-tip="Kein Workout geplant">
                                         <UnusedIcon/>
                                     </div>
                                 {/if}
@@ -216,4 +234,5 @@
             </a>
         </div>
     </div>
+    <AskLocationDialog newEvent={newEvent}/>
 </main>

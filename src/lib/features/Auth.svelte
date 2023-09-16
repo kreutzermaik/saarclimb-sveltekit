@@ -3,11 +3,8 @@
     import Notification from "$lib/ui/Notification";
     import Button from "$lib/ui/Button.svelte";
     import {goto} from '$app/navigation';
-    import SupabaseService from "../../api/supabase-service";
     import DataProvider from "../../data-provider";
     import Cache from "../../cache";
-    import Session from "../../session";
-    import type {User} from "../../types/User";
 
     export let type: string;
 

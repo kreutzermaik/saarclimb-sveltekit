@@ -38,6 +38,7 @@
             await SupabaseService.addEvent(newEvent);
             closeDialog();
             event = "";
+            location = "";
             Notification.show(Notification.EVENT_ADDED_MESSAGE);
         } catch (err: any) {
             Notification.show(Notification.EVENT_ADDED_ERROR_MESSAGE, err.message, "error", 5000);
@@ -115,7 +116,7 @@
                                                 type="text"
                                                 on:change={e => setEvent(e)}
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                placeholder="Bouldern"
+                                                placeholder="z.B. Bouldern"
                                         />
                                     </div>
                                     <div class="m-2">
@@ -150,6 +151,7 @@
                             onClick={addEvent}
                             rounded="true"
                             width="w-full"
+                            disabled={!event || !propsDate}
                     />
                     <Button
                             text="Abbrechen"

@@ -88,6 +88,7 @@
 
   function onDelete(payload: any) {
     events = events.filter((item: any) => item.id !== payload.old.id);
+    console.log(payload)
     if (events) createCalendar();
   }
 
