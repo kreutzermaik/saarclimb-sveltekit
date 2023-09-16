@@ -13,6 +13,7 @@
     import {getSummedPoints, userImage, userPoints, isLoggedIn} from "../../store";
     import ChartVisitedGyms from "$lib/features/ChartVisitedGyms.svelte";
     import SupabaseService from "../../api/supabase-service";
+    import NumberAnimation from "$lib/ui/NumberAnimation.svelte";
 
     let user: User;
     let finishedEvents: number;
@@ -60,7 +61,9 @@
                         <LoadingSpinner/>
                     {:then points}
                         {#if points >= 0}
-                            <h2 class="card-title mx-auto">{points}</h2>
+                            <h2 class="card-title mx-auto">
+                                <NumberAnimation targetValue={points} />
+                            </h2>
                         {:else}
                             <LoadingSpinner/>
                         {/if}
@@ -74,7 +77,9 @@
             <div class="card card-compact shadow-xl mx-auto max-w-sm gradient-purple text-white">
                 <div class="card-body">
                     {#if finishedEvents}
-                        <h2 class="card-title mx-auto">{finishedEvents}</h2>
+                        <h2 class="card-title mx-auto">
+                            <NumberAnimation targetValue={finishedEvents} />
+                        </h2>
                     {:else}
                         <LoadingSpinner/>
                     {/if}
