@@ -86,7 +86,7 @@
                            required=""/>
                 </div>
                 <div id="login">
-                    <Button text="Einloggen" type="custom-secondary" onClick={loginWithEmail}/>
+                    <Button text="Einloggen" type="secondary" onClick={loginWithEmail}/>
                 </div>
                 <hr/>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
@@ -121,7 +121,7 @@
                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            required=""/>
                 </div>
-                <Button text="Registrieren" type="custom-secondary" onClick={registerWithEmail}/>
+                <Button text="Registrieren" type="secondary" onClick={registerWithEmail}/>
                 <hr/>
                 <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                     Zurück zum <a href="/login"

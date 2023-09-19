@@ -192,7 +192,7 @@
   {/if}
   <Button
     text="Speichern"
-    type="custom-secondary"
+    type="secondary"
     onClick={updatePlan}
     width="w-full"
   />

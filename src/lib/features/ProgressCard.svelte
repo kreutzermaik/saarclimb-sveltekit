@@ -287,7 +287,7 @@
                                 <span class="minus-button">
                                     <Button
                                             text="-"
-                                            type="custom-secondary"
+                                            type="secondary"
                                             opacity="opacity-80"
                                             textSize="text-lg"
                                             paddingX="px-3.5"
@@ -307,7 +307,7 @@
                                 <span class="plus-button">
                                     <Button
                                             text="+"
-                                            type="custom-secondary"
+                                            type="secondary"
                                             opacity="opacity-80"
                                             textSize="text-lg"
                                             paddingX="px-3.5"
@@ -330,7 +330,7 @@
         {:else}
             <Button
                     text="Starte mit dieser Boulderhalle!"
-                    type="custom-secondary"
+                    type="secondary"
                     onClick={() => initProgressDataForGym($currentGym.grades)}
             />
         {/if}

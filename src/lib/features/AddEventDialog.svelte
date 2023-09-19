@@ -147,7 +147,7 @@
                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                     <Button
                             text="Speichern"
-                            type="custom-secondary"
+                            type="secondary"
                             onClick={addEvent}
                             rounded="true"
                             width="w-full"
