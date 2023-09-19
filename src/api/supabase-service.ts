@@ -209,7 +209,7 @@ export default class SupabaseService {
             .from("gym")
             .select("name")
             .eq("id", gymId)
-            .single();
+            .maybeSingle();
         return {gym, error};
     }
 
@@ -218,7 +218,7 @@ export default class SupabaseService {
             .from("gym")
             .select("*")
             .eq("name", gymName)
-            .single();
+            .maybeSingle();
         return {gym, error};
     }
 

@@ -19,7 +19,7 @@
   on:click={handleClick}
   type="button"
   disabled={disabled === true}
-  class={`bg-${type} ${width} ${opacity} ${paddingX} ${
+  class={`bg-secondary ${width} ${opacity} ${paddingX} ${
     textSize
   } ${(outline === "true") ? "btn-outline border" : ""} ${
     (rounded === "true") ? "rounded-full" : "rounded-lg"

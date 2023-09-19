@@ -123,7 +123,7 @@
         await fetchAllUsers();
 
         if ($isLoggedIn) {
-            let current_gym_id: number = 0;
+            let current_gym_id: number = 1;
             let currentGymName: string = "";
 
             if ($currentGym) {

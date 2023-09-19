@@ -132,7 +132,7 @@
 <main class="text-center text-gray-700">
   {#if plan}
     <div class="mb-6">
-      <h2 class="card-title float-left">Plane deine Trainingseinheiten</h2>
+      <h2 class="card-title float-left">Deine Trainingseinheiten</h2>
       <div
         class="tooltip tooltip-left tooltip-primary float-right mb-4 z-50"
         data-tip="Hier kannst du für die ganze Woche deine geplanten
