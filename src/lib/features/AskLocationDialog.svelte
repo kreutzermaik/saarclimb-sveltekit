@@ -77,18 +77,19 @@
                 <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                     <Button
                             text="Speichern"
-                            type="secondary"
+                            type="custom-secondary"
                             rounded="true"
                             width="w-full"
                             onClick={addEvent}
                     />
                     <Button
                             text="Abbrechen"
-                            type="secondary"
+                            type="white"
                             outline="true"
                             rounded="true"
                             width="w-full"
                             onClick={closeDialog}
+                            textColor="text-gray-700"
                     />
                 </div>
             </div>
