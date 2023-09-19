@@ -12,9 +12,7 @@
     import type {RealtimeChannel} from "@supabase/supabase-js";
     import type {Event} from "../../types/Event";
     import Session from "../../session";
-    import AddEventDialog from "$lib/features/AddEventDialog.svelte";
-    import {gyms} from "../../store";
-    import Button from "$lib/ui/Button.svelte";
+    import Notification from "$lib/ui/Notification";
     import AskLocationDialog from "$lib/features/AskLocationDialog.svelte";
 
     let plan: Plan[] = [];
@@ -126,6 +124,14 @@
     }
 
     /**
+     * show planned exercise as notification
+     * @param item
+     */
+    function showPlannedExercise(item: Plan) {
+        if (item.value !== '') Notification.show('Geplante Trainingseinheit', item.value, 'info', 5000);
+    }
+
+    /**
      * on subscription insert
      * @param payload
      */
@@ -178,7 +184,11 @@
                     <thead>
                     <tr>
                         {#each plan as item}
-                            <th class="bg-white text-black">{item.day.slice(0, 2)}</th>
+                            <th class="bg-white text-black">
+                                <button class={item.value === '' ? 'cursor-default' : 'cursor-pointer'}
+                                        on:click={showPlannedExercise(item)}>{item.day.slice(0, 2)}
+                                </button>
+                            </th>
                         {/each}
                     </tr>
                     </thead>
