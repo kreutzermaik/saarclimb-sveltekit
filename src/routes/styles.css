@@ -81,6 +81,9 @@ button:disabled {
   opacity: 50%;
 }
 
+/*.planer-table thead th {background: #b0c4de !important;}
+.planer-table tr:nth-child(odd) td {background: #e2ecf3 !important;}
+.planer-table tr:nth-child(even) td {background: #b0c4de !important;}*/
 
 @media screen and (max-width: 640px) {
   .board-table {

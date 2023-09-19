@@ -143,7 +143,7 @@
         <InfoIcon />
       </div>
 
-      <table class="table table-zebra w-full shadow-md">
+      <table class="table table-zebra planer-table w-full shadow-md">
         <thead>
           <tr>
             <th>Tag</th>
