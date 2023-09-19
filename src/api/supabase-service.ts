@@ -137,6 +137,15 @@ export default class SupabaseService {
             .eq("date", event.date);
     }
 
+    public static async removeEventByDate(event: string, date: string): Promise<void> {
+        await supabase
+            .from("events")
+            .delete()
+            .eq("userid", await Session.getCurrentUserId())
+            .eq("title", event)
+            .eq("date", date);
+    }
+
     public static async getEvents() {
         const {data: events, error} = await supabase
             .from("events")

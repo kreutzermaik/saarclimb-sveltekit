@@ -59,6 +59,7 @@
         // open AskLocationDialog if event is a climbing event
         if (event.match("Kletter") || event.match("Boulder") || event.match("Climb")) {
             if (item.checked) openDialog();
+            await SupabaseService.removeEventByDate(event, date);
         } else {
             if (item.checked) await SupabaseService.addEvent(newEvent);
             else await SupabaseService.removeEvent(newEvent);
