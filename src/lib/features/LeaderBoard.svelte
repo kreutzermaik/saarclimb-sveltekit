@@ -123,7 +123,7 @@
         await fetchAllUsers();
 
         if ($isLoggedIn) {
-            let current_gym_id: number = 0;
+            let current_gym_id: number = 1;
             let currentGymName: string = "";
 
             if ($currentGym) {
@@ -131,7 +131,7 @@
                 currentGymName = $currentGym.name;
             } else {
                 if (current_gym_id) {
-                    currentGymName = (await SupabaseService.getGymNameById(current_gym_id))?.gym.name;
+                    currentGymName = (await SupabaseService.getGymNameById(current_gym_id))?.gym?.name;
                 }
             }
 

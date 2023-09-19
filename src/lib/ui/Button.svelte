@@ -8,6 +8,7 @@
   export let textSize: string = "undefined";
   export let paddingX: string = "undefined";
   export let disabled: boolean = false;
+  export let textColor: string = "text-white";
   export let onClick: Function = () => {};
 
   function handleClick() {
@@ -19,11 +20,8 @@
   on:click={handleClick}
   type="button"
   disabled={disabled === true}
-  class={`bg-${type} ${width} ${opacity} ${paddingX} ${
-    textSize
-  } ${(outline === "true") ? "btn-outline border" : ""} ${
-    (rounded === "true") ? "rounded-full" : "rounded-lg"
-  } text-white text-sm focus:ring-4 font-medium px-5 py-2 mr-2 mb-2 focus:outline-none`}
+  class={`bg-${type} ${width} ${opacity} ${paddingX} ${textSize} ${textColor} ${(outline === "true") ? "btn-outline border" : ""}
+          ${(rounded === "true") ? "rounded-full" : "rounded-lg"} text-sm px-5 py-2 mr-2 mb-2 hover:opacity-75`}
 >
   {text}
 </button>
