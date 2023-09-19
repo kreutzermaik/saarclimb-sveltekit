@@ -155,11 +155,12 @@
                     />
                     <Button
                             text="Abbrechen"
-                            type="secondary"
+                            type="white"
                             onClick={closeDialog}
                             outline="true"
                             rounded="true"
                             width="w-full"
+                            textColor="text-gray-700"
                     />
                 </div>
             </div>

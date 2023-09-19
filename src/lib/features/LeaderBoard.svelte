@@ -131,7 +131,7 @@
                 currentGymName = $currentGym.name;
             } else {
                 if (current_gym_id) {
-                    currentGymName = (await SupabaseService.getGymNameById(current_gym_id))?.gym.name;
+                    currentGymName = (await SupabaseService.getGymNameById(current_gym_id))?.gym?.name;
                 }
             }
 

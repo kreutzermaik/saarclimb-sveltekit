@@ -143,7 +143,7 @@
         <InfoIcon />
       </div>
 
-      <table class="table table-zebra w-full shadow-md">
+      <table class="table table-zebra planer-table w-full shadow-md">
         <thead>
           <tr>
             <th>Tag</th>
@@ -194,15 +194,14 @@
     text="Speichern"
     type="secondary"
     onClick={updatePlan}
-    rounded="true"
     width="w-full"
   />
   <Button
     text="Zurücksetzen"
-    type="secondary"
+    type="white"
     onClick={resetPlan}
     outline="true"
-    rounded="true"
     width="w-full"
+    textColor="text-gray-700"
   />
 </main>
