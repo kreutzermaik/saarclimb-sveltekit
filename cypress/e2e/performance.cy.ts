@@ -6,7 +6,7 @@ describe('progress spec', () => {
          * Login
          */
         cy.visit('/');
-        cy.wait(2000);
+        cy.wait(5000);
         cy.get('#goto-login').should('be.visible').click();
         cy.wait(1000);
         cy.get('#email-field').should('be.visible').type('cypress@user.com');
