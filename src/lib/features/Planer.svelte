@@ -39,15 +39,13 @@
     day.value = element.value;
     // update ui elements
     if (element.value === "") {
-      element.classList.remove("bg-secondary");
-      element.classList.remove("text-white");
+      element.classList.remove("border-primary");
       element.classList.add("placeholder-gray-500");
       element.classList.add("bg-neutral");
       checkbox.checked = false;
     } else {
       element.classList.remove("bg-neutral");
-      element.classList.add("bg-secondary");
-      element.classList.add("text-white");
+      element.classList.add("border-primary");
     }
   }
 
@@ -169,8 +167,8 @@
                     id={item.day}
                     class={`${
                       item.value !== ""
-                        ? "bg-secondary text-white opacity-80"
-                        : "bg-neutral text-black, placeholder-gray-500"
+                        ? "border-primary"
+                        : "bg-neutral text-black placeholder-gray-500"
                     } border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 max-w-7xl`}
                     placeholder="Nichts geplant"
                     required
