@@ -184,6 +184,14 @@
     }
 
     /**
+     * return grade value by grade name
+     * @param grade
+     */
+    function getGymGradeValueByName(grade: string) {
+        return $currentGym.grades?.find(item => item.grade === grade)?.value;
+    }
+
+    /**
      * on subscription insert
      * @param payload
      */
@@ -318,7 +326,7 @@
                             <td class="px-3 py-2 w-9/12">
                                 <div class="flex gap-5">
                                     <div class={`${setColor(progressItem.grade.toUpperCase())} p-2.5 rounded-md w-full`}>
-                                        {progressItem.grade.toUpperCase()}
+                                        {getGymGradeValueByName(progressItem.grade)}
                                     </div>
                                 </div>
                             </td>
@@ -331,7 +339,7 @@
             <Button
                     text="Starte mit dieser Boulderhalle!"
                     type="secondary"
-                    onClick={() => initProgressDataForGym($currentGym.grades)}
+                    onClick={() => initProgressDataForGym($currentGym.grades?.map(item => item.grade))}
             />
         {/if}
     </div>
