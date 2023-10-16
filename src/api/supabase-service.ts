@@ -118,7 +118,7 @@ export default class SupabaseService {
         await supabase
             .storage
             .from("avatars")
-            .update(await Session.getCurrentUserId(), file as File);
+            .upload(await Session.getCurrentUserId(), file as File, {upsert: true});
     }
 
     public static async addEvent(event: Event): Promise<void> {
