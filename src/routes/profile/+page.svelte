@@ -79,7 +79,7 @@
     {#if $isLoggedIn}
         {#if user}
             <div
-                    class="userImage mx-auto w-20 h-20 mt-4"
+                    class="userImage mx-auto w-20 h-20 mt-4 cursor-pointer border-secondary border-2 hover:opacity-80"
                     style={`background-image: url(${$userImage})`}
                     on:click={openDialog}
             />
