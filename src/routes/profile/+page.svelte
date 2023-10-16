@@ -52,6 +52,8 @@
             });
             await SupabaseService.updateAvatar(compressedFile);
             await DataProvider.updateAvatarUrlInCache();
+
+
         } catch (error) {
             console.log(error);
         }

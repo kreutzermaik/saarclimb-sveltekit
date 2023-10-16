@@ -6,13 +6,13 @@ import type {RealtimeChannel, RealtimePostgresChangesPayload} from "@supabase/su
 
 export default class SupabaseService {
     public static async addUser(user: User): Promise<void> {
+        console.log(user);
         await supabase
             .from("users")
             .upsert({
                 uid: user.uid,
                 email: user.email,
-                name: user.name,
-                avatar_url: user.avatar_url,
+                name: user.name
             })
     }
 
