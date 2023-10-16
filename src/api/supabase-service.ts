@@ -114,8 +114,9 @@ export default class SupabaseService {
         return {data, error};
     }
 
-    public static async updateAvatar(file: any): Promise<void> {
-        await supabase.storage
+    public static async updateAvatar(file: File): Promise<void> {
+        await supabase
+            .storage
             .from("avatars")
             .update(await Session.getCurrentUserId(), file as File);
     }
