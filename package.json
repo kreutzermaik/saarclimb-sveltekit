@@ -25,7 +25,6 @@
     "flowbite": "^1.6.3",
     "plantuml": "^0.0.2",
     "start-server-and-test": "^2.0.0",
-    "sweetalert2": "^11.7.20",
     "vite-plugin-pwa": "^0.16.4",
     "webworker": "^0.8.4"
   },

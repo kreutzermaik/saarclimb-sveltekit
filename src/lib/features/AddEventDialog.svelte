@@ -1,10 +1,10 @@
 <script lang="ts">
     import SupabaseService from "../../api/supabase-service";
     import Session from "../../session";
-    import Notification from "../ui/Notification";
     import type {Event} from "../../types/Event";
     import Button from "$lib/ui/Button.svelte";
     import {gyms} from "../../store";
+    import Toast from "$lib/ui/Toast";
 
     export let propsDate: any;
     $: date = "";
@@ -39,9 +39,9 @@
             closeDialog();
             event = "";
             location = "";
-            Notification.show(Notification.EVENT_ADDED_MESSAGE);
+            new Toast().push({content: Toast.EVENT_ADDED_MESSAGE, style: 'success', duration: 3000});
         } catch (err: any) {
-            Notification.show(Notification.EVENT_ADDED_ERROR_MESSAGE, err.message, "error", 5000);
+            new Toast().push({content: Toast.EVENT_ADDED_ERROR_MESSAGE, style: 'error'});
         }
     }
 

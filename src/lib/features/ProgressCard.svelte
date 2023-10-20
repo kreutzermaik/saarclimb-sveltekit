@@ -3,11 +3,11 @@
     import type {Gym} from "../../types/Gym";
     import type {Progress} from "../../types/Progress";
     import type {ProgressItem} from "../../types/ProgressItem";
-    import Notification from "$lib/ui/Notification";
     import Button from "$lib/ui/Button.svelte";
     import {onDestroy, onMount} from "svelte";
     import type {RealtimeChannel} from "@supabase/supabase-js";
     import {currentGymId, currentGym, gyms} from "../../store";
+    import Toast from "$lib/ui/Toast";
 
     let subscription: RealtimeChannel;
 
@@ -72,7 +72,7 @@
         });
         await SupabaseService.insertProgress(array, $currentGym.id);
         await fetchProgress($currentGym.id);
-        Notification.show(Notification.GYM_VALUES_ADDED_MESSAGE);
+        new Toast().push({content: Toast.GYM_VALUES_ADDED_MESSAGE, style: 'success', duration: 3000});
         await fetchProgress($currentGym.id);
     }
 

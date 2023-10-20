@@ -12,8 +12,8 @@
     import type {RealtimeChannel} from "@supabase/supabase-js";
     import type {Event} from "../../types/Event";
     import Session from "../../session";
-    import Notification from "$lib/ui/Notification";
     import AskLocationDialog from "$lib/features/AskLocationDialog.svelte";
+    import Toast from "$lib/ui/Toast";
 
     let plan: Plan[] = [];
     let subscription: RealtimeChannel;
@@ -128,7 +128,10 @@
      * @param item
      */
     function showPlannedExercise(item: Plan) {
-        if (item.value !== '') Notification.show('Geplante Trainingseinheit', item.value, 'info', 5000);
+        if (item.value !== '') {
+            new Toast().push({title: Toast.PLANNED_EXERCISE, content: item.value,
+                position: 'top-right', style: 'verified', duration: 5000});
+        }
     }
 
     /**

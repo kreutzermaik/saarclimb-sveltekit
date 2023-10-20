@@ -3,7 +3,7 @@
     import Button from "$lib/ui/Button.svelte";
     import type {Event} from "../../types/Event";
     import SupabaseService from "../../api/supabase-service";
-    import Notification from "$lib/ui/Notification";
+    import Toast from "$lib/ui/Toast";
 
     export let newEvent: Event;
     $: location = "";
@@ -27,9 +27,9 @@
             newEvent.location = location;
             await SupabaseService.addEvent(newEvent);
             closeDialog();
-            Notification.show(Notification.EVENT_ADDED_MESSAGE);
+            new Toast().push({content: Toast.EVENT_ADDED_MESSAGE, style: 'success', duration: 3000});
         } catch (err: any) {
-            Notification.show(Notification.EVENT_ADDED_ERROR_MESSAGE, err.message, "error", 5000);
+            new Toast().push({content: Toast.EVENT_ADDED_ERROR_MESSAGE, style: 'error', duration: 5000});
         }
     }
 

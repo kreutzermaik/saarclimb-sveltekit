@@ -1,10 +1,10 @@
 <script lang="ts">
     import {supabase} from "../../supabase";
-    import Notification from "$lib/ui/Notification";
     import Button from "$lib/ui/Button.svelte";
     import {goto} from '$app/navigation';
     import DataProvider from "../../data-provider";
     import Cache from "../../cache";
+    import Toast from "$lib/ui/Toast";
 
     export let type: string;
 
@@ -35,13 +35,13 @@
         })
 
         if (error) {
-            Notification.show(Notification.REGISTER_ERROR_MESSAGE, error.message, 'error', 5000);
+            new Toast().push({title: Toast.REGISTER_ERROR_MESSAGE, content: error.message, style: 'error', duration: 5000});
             return;
         }
 
         await DataProvider.initUserData();
 
-        Notification.show(Notification.REGISTERED_MESSAGE);
+        new Toast().push({content: Toast.REGISTERED_MESSAGE, style: 'success', duration: 3000});
 
         await goto('/');
     }
@@ -56,7 +56,7 @@
         })
 
         if (error) {
-            Notification.show(Notification.LOGIN_ERROR_MESSAGE, error.message, 'error', 5000);
+            new Toast().push({title: Toast.LOGIN_ERROR_MESSAGE, content: error.message, style: 'error', duration: 5000});
             return;
         }
 

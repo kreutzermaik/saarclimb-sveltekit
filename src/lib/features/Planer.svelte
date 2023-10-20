@@ -1,7 +1,6 @@
 <script lang="ts">
   import SupabaseService from "../../api/supabase-service";
   import type {Plan} from "../../types/Plan";
-  import Notification from "$lib/ui/Notification";
   import {onDestroy, onMount} from "svelte";
   import Cache from "../../cache";
   import LoadingSpinner from "$lib/ui/LoadingSpinner.svelte";
@@ -9,6 +8,7 @@
   import Button from "$lib/ui/Button.svelte";
   import InfoIcon from "$lib/ui/icons/InfoIcon.svelte";
   import type {RealtimeChannel} from "@supabase/supabase-js";
+  import Toast from "$lib/ui/Toast";
 
   let subscription: RealtimeChannel;
 
@@ -55,14 +55,10 @@
   function updatePlan() {
     try {
       SupabaseService.updatePlan(plan);
-      Notification.show(Notification.PLAN_UPDATED_MESSAGE);
+      new Toast().push({content: Toast.PLAN_UPDATED_MESSAGE, style: 'success', duration: 3000});
     } catch (err: any) {
-      Notification.show(
-        Notification.PLAN_UPDATED_ERROR_MESSAGE,
-        err.message,
-        "error",
-        5000
-      );
+      new Toast().push({title: Toast.PLAN_UPDATED_ERROR_MESSAGE, style: 'error', duration: 5000});
+
     }
   }
 
