@@ -5,7 +5,7 @@ import Session from "./session";
 import type {Gym} from "./types/Gym";
 
 export const userImage: Writable<string> = writable("");
-export const userPoints: Writable<Promise<number>> = writable(getSummedPoints());
+export const userPoints: Writable<Promise<any>> = writable(getSummedPoints());
 export const isLoggedIn: Writable<boolean> = writable();
 Session.isLoggedIn().then((value) => {
     isLoggedIn.set(value);

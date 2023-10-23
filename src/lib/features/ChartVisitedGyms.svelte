@@ -63,8 +63,10 @@
         if (gyms) {
             await Promise.all(gyms?.map(async (gym: any) => {
                 let count = (await SupabaseService.getEventsByLocation(gym.name)).events?.length;
-                gymCountArray.push({name: gym.name, value: count});
-                return gymCountArray;
+                if (count > 0) {
+                    gymCountArray.push({name: gym.name, value: count});
+                    return gymCountArray;
+                }
             }));
         }
         gymCountArray.sort((a: any, b: any) => b.value - a.value);

@@ -1,5 +1,5 @@
 import {browser} from '$app/environment';
-import {currentGym, isLoggedIn, userImage, userPoints} from "./store";
+import {isLoggedIn, userImage, userPoints} from "./store";
 
 export default class Cache {
 
@@ -44,5 +44,6 @@ export default class Cache {
         }
         userPoints.set(0);
         isLoggedIn.set(false);
+        userImage.set("");
     }
 }
