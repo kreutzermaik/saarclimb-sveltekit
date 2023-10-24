@@ -63,7 +63,7 @@
      */
     onMount(async () => {
         if (dev) isAdmin = true;
-        else if (await Session.getCurrentUserId() === import.meta.env.ADMIN_USE) isAdmin = true;
+        else if (await Session.getCurrentUserId() === import.meta.env.VITE_ADMIN_USER) isAdmin = true;
     })
 
 </script>
