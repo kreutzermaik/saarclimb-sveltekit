@@ -68,7 +68,7 @@
 
 </script>
 
-<main class="text-center mx-auto text-gray-700">
+<main class="text-center mx-auto text-gray-700 mb-20">
     <Header headerText="Einstellungen"/>
 
     <div class="card card-compact shadow-xl bg-white">
