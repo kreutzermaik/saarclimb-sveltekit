@@ -9,6 +9,8 @@ export default class Toast {
     public static PLAN_UPDATED_ERROR_MESSAGE = 'Der Wochenplan konnte nicht aktualisiert werden!';
     public static GYM_VALUES_ADDED_MESSAGE = 'Die Boulderhalle wurde erfolgreich angelegt!';
     public static PLANNED_EXERCISE = 'Geplante Trainingseinheit:';
+    public static GYM_ADDED_MESSAGE = 'Die neue Halle wurde erfolgreich hinzugefügt.';
+    public static GYM_ADDED_ERROR_MESSAGE = 'Die neue Halle konnte nicht hinzugefügt werden.';
 
     options: any;
 
@@ -45,7 +47,6 @@ export default class Toast {
         document.body.appendChild(toast);
         toast.getBoundingClientRect();
 
-        console.log(obj.position)
         if (obj.position && obj.position !== this.position) {
             this.position = obj.position;
         }

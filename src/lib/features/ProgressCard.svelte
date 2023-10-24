@@ -62,7 +62,7 @@
     }
 
     /**
-     * push new entry for progress table
+     * push new entry for progress table and set points value in array to 0
      * @param grades
      */
     async function initProgressDataForGym(grades: ProgressItem[]) {
@@ -74,6 +74,10 @@
         await fetchProgress($currentGym.id);
         new Toast().push({content: Toast.GYM_VALUES_ADDED_MESSAGE, style: 'success', duration: 3000});
         await fetchProgress($currentGym.id);
+
+        let currentPoints = (await SupabaseService.getCurrentPoints()).points?.points;
+        currentPoints.push({gymId: $currentGym.id, value: 0});
+        await SupabaseService.updateUserPoints(currentPoints);
     }
 
     /**
@@ -178,6 +182,9 @@
                 break;
             case 'ROT':
                 color = 'bg-custom-red text-white border-2 border-gray-400';
+                break;
+            case 'PINK':
+                color = 'bg-custom-pink text-white border-2 border-gray-400';
                 break;
         }
         return color;

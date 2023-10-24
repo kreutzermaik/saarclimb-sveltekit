@@ -169,6 +169,15 @@ export default class SupabaseService {
         return {gym, error};
     }
 
+    public static async insertGym(gym: any): Promise<void> {
+        await supabase
+            .from("gym")
+            .insert({
+                name: gym.name,
+                grades: gym.grades,
+            });
+    }
+
     public static async getProgress(gymId: number) {
         const {data: progress, error} = await supabase
             .from("progress")
