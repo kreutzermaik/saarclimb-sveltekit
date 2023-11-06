@@ -167,7 +167,7 @@
         {:else if $currentGym}
             {$currentGym.name}
         {:else}
-            Bitte auswählen...
+            {changeGym("Boulder Olymp")}
         {/if}
     </option>
     {#if $gyms}

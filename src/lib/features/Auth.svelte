@@ -75,7 +75,7 @@
                         Adresse</label>
                     <input type="email" name="email" id="email-field" on:change={e => setEmail(e)}
                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           placeholder="name@email.com" required=""/>
+                           placeholder="name@email.com" required/>
                 </div>
                 <div>
                     <label for="password"
@@ -83,7 +83,7 @@
                     <input type="password" name="password" id="password-field" on:change={e => setPassword(e)}
                            placeholder="••••••••"
                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           required=""/>
+                           required/>
                 </div>
                 <div id="login">
                     <Button text="Einloggen" type="secondary" onClick={loginWithEmail}/>

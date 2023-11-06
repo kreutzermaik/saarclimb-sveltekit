@@ -12,7 +12,9 @@
     "cy:open": "cypress open",
     "e2e": "cypress run",
     "ci:start-server": "npm run dev",
-    "ci:cy-run": "start-server-and-test ci:start-server http://localhost:5173 cy:run"
+    "ci:cy-run": "start-server-and-test ci:start-server http://localhost:5173 cy:run",
+    "lighthouse:run": "node ./src/test/performance/dashboard.js && node ./src/test/performance/progress.js",
+    "ci:lighthouse-run": "start-server-and-test ci:start-server http://localhost:5173 lighthouse:run"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.8.0",
@@ -23,12 +25,16 @@
     "daisyui": "^2.51.3",
     "dotenv": "^16.3.1",
     "flowbite": "^1.6.3",
+    "fs": "^0.0.1-security",
+    "lighthouse": "^11.2.0",
     "plantuml": "^0.0.2",
+    "puppeteer": "^21.5.0",
     "start-server-and-test": "^2.0.0",
     "vite-plugin-pwa": "^0.16.4",
     "webworker": "^0.8.4"
   },
   "devDependencies": {
+    "@cypress-audit/lighthouse": "^1.4.2",
     "@fullcalendar/core": "^6.0.0",
     "@fullcalendar/daygrid": "^6.0.0",
     "@fullcalendar/interaction": "^6.0.0",
@@ -38,7 +44,7 @@
     "@types/d3": "^7.4.0",
     "@vite-pwa/sveltekit": "^0.2.5",
     "autoprefixer": "^10.4.14",
-    "cypress": "^13.1.0",
+    "cypress": "^13.3.3",
     "postcss": "^8.4.24",
     "postcss-load-config": "^4.0.1",
     "svelte": "^4.0.5",

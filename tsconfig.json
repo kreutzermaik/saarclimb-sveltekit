@@ -8,6 +8,7 @@
 		"resolveJsonModule": true,
 		"skipLibCheck": true,
 		"inlineSourceMap": true,
-		"strict": true
+		"strict": true,
+		"allowImportingTsExtensions": true
 	}
 }
