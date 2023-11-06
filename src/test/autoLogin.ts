@@ -1,4 +1,6 @@
+// @ts-ignore
 import {supabase} from "../supabase.ts";
+// @ts-ignore
 import DataProvider from "../data-provider.ts";
 
 /**
