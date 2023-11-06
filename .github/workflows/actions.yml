@@ -59,4 +59,4 @@ jobs:
           name: test-results
           path: |
             /var/log/collectl/performance_Messung.csv
-            ./src/test/reports/
+            ${{ github.workspace }}/src/test/reports/
