@@ -123,7 +123,7 @@
 
             <div class="text-left">
                 <p>
-                    Bei Problemen oder Fragen wende dich bitte direkt an den mich, den Entwickler. Du kannst mich per
+                    Bei Problemen oder Fragen wende dich bitte direkt an mich, den Entwickler. Du kannst mich per
                     E-Mail
                     unter
                     <b><a href="mailto:kreutzermaik123@web.de"> kreutzermaik123@web.de </a></b> erreichen.
