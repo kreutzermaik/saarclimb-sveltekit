@@ -159,31 +159,31 @@
      */
     function setColor(color: string) {
         switch (color) {
-            case 'GRÜN':
+            case 'grün':
                 color = 'bg-custom-green text-white border-2 border-gray-400';
                 break;
-            case 'GELB':
+            case 'gelb':
                 color = 'bg-custom-yellow text-white border-2 border-gray-400';
                 break;
-            case 'ORANGE':
+            case 'orange':
                 color = 'bg-custom-orange text-white border-2 border-gray-400';
                 break;
-            case 'BLAU':
+            case 'blau':
                 color = 'bg-custom-blue text-white border-2 border-gray-400';
                 break;
-            case 'WEISS':
+            case 'weiß':
                 color = 'bg-white text-black border-2 border-gray-400';
                 break;
-            case 'TÜRKIS':
+            case 'türkis':
                 color = 'bg-custom-turquiose text-white border-2 border-gray-400';
                 break;
-            case 'SCHWARZ':
+            case 'schwarz':
                 color = 'bg-black text-white border-2 border-gray-400';
                 break;
-            case 'ROT':
+            case 'rot':
                 color = 'bg-custom-red text-white border-2 border-gray-400';
                 break;
-            case 'PINK':
+            case 'pink':
                 color = 'bg-custom-pink text-white border-2 border-gray-400';
                 break;
         }
@@ -296,10 +296,10 @@
                 </thead>
                 <tbody>
                 {#each progress as item}
-                    {#each item.progress as progressItem}
+                    {#each item.progress as progressItem, index}
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="px-3 py-2 w-2/12">
-                                <span class="minus-button">
+                                <span id={`button-minus-${index}`} class="minus-button">
                                     <Button
                                             text="-"
                                             type="secondary"
@@ -319,7 +319,7 @@
                                         value={progressItem.value}
                                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5 mr-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-14 lg:w-44"
                                 />
-                                <span class="plus-button">
+                                <span id={`button-plus-${index}`} class="plus-button">
                                     <Button
                                             text="+"
                                             type="secondary"
@@ -332,8 +332,8 @@
                             </td>
                             <td class="px-3 py-2 w-9/12">
                                 <div class="flex gap-5">
-                                    <div class={`${setColor(progressItem.grade.toUpperCase())} p-2.5 rounded-md w-full`}>
-                                        {getGymGradeValueByName(progressItem.grade)}
+                                    <div class={`${setColor(progressItem.grade.grade)} p-2.5 rounded-md w-full`}>
+                                        {getGymGradeValueByName(progressItem.grade.grade)}
                                     </div>
                                 </div>
                             </td>
