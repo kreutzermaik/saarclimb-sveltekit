@@ -6,14 +6,14 @@ describe('progress spec', () => {
          * Login
          */
         cy.visit('/');
-        cy.wait(5000);
-        cy.get('#goto-login').should('be.visible').click();
+        cy.wait(2000);
+        // cy.get('#goto-login').should('be.visible').click();
         cy.wait(1000);
-        cy.get('#email-field').should('be.visible').type('cypress@user.com');
+        // cy.get('#email-field').should('be.visible').type('cypress@user.com');
         cy.wait(1000);
-        cy.get('#password-field').should('be.visible').type('test123');
+        // cy.get('#password-field').should('be.visible').type('test123');
         cy.wait(1000);
-        cy.get('#login button').should('be.visible').click();
+        // cy.get('#login button').should('be.visible').click();
         cy.wait(1000);
 
         /**

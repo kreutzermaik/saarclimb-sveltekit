@@ -12,7 +12,7 @@
     import {onMount} from "svelte";
     import {isLoggedIn} from "../store";
     import {dev} from '$app/environment'
-    import {autoLogin} from "../test/autoLogin.ts";
+    import {autoLogin} from "../test/autoLogin";
 
     onMount(async () => {
         if ($isLoggedIn) {
