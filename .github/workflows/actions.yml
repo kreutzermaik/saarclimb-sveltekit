@@ -51,7 +51,7 @@ jobs:
         run: sudo cp /var/log/collectl/performance_Messung*.tab* /var/log/collectl/performance_Messung.csv
 
       - name: Starten der Lighthouse Tests
-        run: ls /var/log/collectl/
+        run: npm run ci:lighthouse-run
 
       - name: Speichern der Ergebnisse als Artefakte
         uses: actions/upload-artifact@v3
