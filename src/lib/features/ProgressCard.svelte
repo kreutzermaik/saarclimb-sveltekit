@@ -195,6 +195,7 @@
      * @param grade
      */
     function getGymGradeValueByName(grade: string) {
+        console.log(grade + ": " + $currentGym.grades?.find(item => item.grade === grade)?.value)
         return $currentGym.grades?.find(item => item.grade === grade)?.value;
     }
 
