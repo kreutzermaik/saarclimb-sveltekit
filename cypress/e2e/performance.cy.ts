@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('progress spec', () => {
+describe('performance spec', () => {
     it('passes', () => {
         /**
          * Progress
