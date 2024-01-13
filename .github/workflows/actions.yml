@@ -75,7 +75,7 @@ jobs:
         run: sudo cp /var/log/collectl/performance_idle*.tab* /var/log/collectl/performance_idle.csv
 
       - name: Starten von collectl im Hintergrund fuer Szenario Messung
-        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_Messung.csv &
+        run: sudo collectl -s cdmn -i1 -P --sep ',' -f /var/log/collectl/performance_szenario.csv &
 
       - name: Warten auf die Bereitschaft von collectl
         run: sleep 10
@@ -90,10 +90,10 @@ jobs:
         run: sudo killall collectl
 
       - name: Log-Datei entpacken und verschieben
-        run: sudo gzip -d /var/log/collectl/performance_Messung.csv*.gz*
+        run: sudo gzip -d /var/log/collectl/performance_szenario.csv*.gz*
 
       - name: Log-Datei in CSV-Format exportieren
-        run: sudo cp /var/log/collectl/performance_Messung*.tab* /var/log/collectl/performance_Messung.csv
+        run: sudo cp /var/log/collectl/performance_szenario*.tab* /var/log/collectl/performance_szenario.csv
 
       - name: Starten der Lighthouse Tests
         run: npm run ci:lighthouse-run
@@ -103,5 +103,7 @@ jobs:
         with:
           name: test-results
           path: |
-            /var/log/collectl/performance_Messung.csv
+            /var/log/collectl/performance_baseline.csv
+            /var/log/collectl/performance_idle.csv
+            /var/log/collectl/performance_szenario.csv
             ${{ github.workspace }}/src/test/reports/
