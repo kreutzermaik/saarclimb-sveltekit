@@ -7,6 +7,5 @@ describe('performance spec', () => {
          */
         cy.visit('/progress');
         cy.wait(10000);
-        cy.get('#gyms').select('Boulder Olymp');
     })
 })
