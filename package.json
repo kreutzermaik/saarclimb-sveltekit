@@ -39,7 +39,6 @@
     "@fullcalendar/core": "^6.1.4",
     "@fullcalendar/daygrid": "^6.1.4",
     "@fullcalendar/interaction": "^6.1.4",
-    "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@types/cypress": "^1.1.3",
