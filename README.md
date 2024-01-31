@@ -2,7 +2,7 @@
 
 [![CI/CD Pipeline](https://github.com/kreutzermaik/saarclimb-sveltekit/actions/workflows/actions.yml/badge.svg)](https://github.com/kreutzermaik/saarclimb-sveltekit/actions/workflows/actions.yml)
 
-> 🌐 PWA: [https://sveltekit-saarclimb.netlify.app/](https://sveltekit-saarclimb.netlify.app/)
+> 🌐 PWA: [https://saarclimb.de/](https://saarclimb.de/)
 >
 > 👷‍♀️In dieser README wird die Architektur des Projektes erklärt
 
@@ -28,22 +28,22 @@
 
 ## ⌘ Commands
 
-| Command           | Action                                                |
-|:------------------|:------------------------------------------------------|
-| `npm install`     | Abhängigkeiten installieren                           |
-| `npm run dev`     | Startet lokalen Server `http://localhost:5173/`       |
-| `npm run build`   | Bauprozess für die Produktion zum Ordner `./netlify/` |
-| `npm run preview` | Vorschau der gebauten App vor Deploy                  |
+| Command           | Action                                          |
+|:------------------|:------------------------------------------------|
+| `npm install`     | Abhängigkeiten installieren                     |
+| `npm run dev`     | Startet lokalen Server `http://localhost:5173/` |
+| `npm run build`   | Bauprozess für die Produktion                   |
+| `npm run preview` | Vorschau der gebauten App vor Deploy            |
 
 ## 🚀 Deployment
 
-- Die Webseite wird mit dem Tool [Netlify](https://www.netlify.com/) deployed
-- Das GitHub-Repository der Webseite ist mit einem Netlify-Konto verknüpft
+- Die Webseite wird mit dem Tool [Vercel](https://vercel.com/) deployed
+- Das GitHub-Repository der Webseite ist mit einem Vercel-Konto verknüpft
 - Wird ein neuer Commit auf den `master`-Branch gepusht, wird die Webseite automatisch neu gebaut und deployed
 
 ## 🖥️ CI/CD
 
-- GitHub Action Workflows werden für automatisierte Cypress-Tests verwendet
+- GitHub Action Workflows werden für automatisierte Tests verwendet
 
 ## 📝 License
 
