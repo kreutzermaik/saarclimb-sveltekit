@@ -159,7 +159,9 @@
      * @param color
      */
     function setColor(color: string) {
-        if (dev) color = color.grade;
+        console.log(color)
+        console.log(color.grade)
+       /* if (dev) color = color.grade;*/
         switch (color) {
             case 'grün':
                 color = 'bg-custom-green text-white border-2 border-gray-400';
@@ -197,7 +199,7 @@
      * @param grade
      */
     function getGymGradeValueByName(grade: string) {
-        if (dev) grade = grade.grade;
+        /*if (dev) grade = grade.grade;*/
         return $currentGym.grades?.find(item => item.grade === grade)?.value;
     }
 
@@ -335,8 +337,8 @@
                             </td>
                             <td class="px-3 py-2 w-9/12">
                                 <div class="flex gap-5">
-                                    <div class={`${setColor(progressItem.grade)} p-2.5 rounded-md w-full`}>
-                                        {getGymGradeValueByName(progressItem.grade)}
+                                    <div class={`${setColor(progressItem.grade.grade)} p-2.5 rounded-md w-full`}>
+                                        {getGymGradeValueByName(progressItem.grade.grade)}
                                     </div>
                                 </div>
                             </td>
