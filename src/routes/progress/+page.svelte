@@ -8,15 +8,7 @@
     import NotLoggedIn from "$lib/ui/NotLoggedIn.svelte";
     import ProgressCard from "$lib/features/ProgressCard.svelte";
     import {isLoggedIn} from "../../store";
-    import {onMount} from "svelte";
-    import {dev} from "$app/environment";
-    import {autoLogin} from "../../test/autoLogin.ts";
 
-    onMount(async () => {
-        if (!$isLoggedIn && dev) {
-            await autoLogin();
-        }
-    });
 </script>
 
 <main class="text-center text-gray-700">

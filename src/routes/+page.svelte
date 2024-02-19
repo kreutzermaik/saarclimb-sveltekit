@@ -11,14 +11,10 @@
     import DataProvider from "../data-provider";
     import {onMount} from "svelte";
     import {isLoggedIn} from "../store";
-    import {dev} from '$app/environment'
-    import {autoLogin} from "../test/autoLogin";
 
     onMount(async () => {
         if ($isLoggedIn) {
             await DataProvider.initUserData();
-        } else if (!$isLoggedIn && dev) {
-            await autoLogin();
         }
     })
 </script>
